@@ -15,4 +15,9 @@ public abstract class  Personnage {
    public void setY(int y){
        this.y=y;
    }
+  
+   @Override
+   public boolean equals(Object o){
+       return o instanceof PacMan || o instanceof Fantome;
+   }
 }

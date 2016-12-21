@@ -8,6 +8,10 @@ public class Champignon implements Aliment  {
     }
     @Override
     public String toString(){
-        return "C";
+        return " C ";
+    }
+    @Override
+    public boolean equals(Object o ){
+        return o instanceof Champignon;
     }
 }

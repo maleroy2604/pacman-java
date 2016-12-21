@@ -9,6 +9,10 @@ public class Mur implements Element {
    
      @Override
     public String toString(){
-        return "X";
+        return " X ";
+    }
+     @Override
+    public boolean equals (Object o ){
+        return o instanceof Mur;
     }
 }

@@ -9,8 +9,9 @@ public class Fantome extends  Personnage {
     }
     @Override
     public String toString(){
-        return "F";
+        return " F ";
     }
+   
     
     
 }

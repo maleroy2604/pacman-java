@@ -39,8 +39,9 @@ public class Case {
     Personnage getPerso(){
         return this.perso;
     }
+   
     @Override
    public  String toString(){
-        return " ";
+        return "   ";
     }
 }

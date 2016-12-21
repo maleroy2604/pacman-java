@@ -9,6 +9,7 @@ public class PacMan extends  Personnage {
     }
     @Override
     public String toString(){
-        return "P";
+        return " P ";
     }
+   
 }
