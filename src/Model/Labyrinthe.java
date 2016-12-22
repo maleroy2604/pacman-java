@@ -13,6 +13,7 @@ public class Labyrinthe {
     private boolean superPacMan=false;
     private List<Case> caseValide = new LinkedList<>();
     private Case[][] board = new Case[TAB.length][TAB[0].length];
+    private final Scanner scanner= new Scanner(System.in);
     private static final int[][] TAB = {
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
         {1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1},
@@ -98,8 +99,8 @@ public class Labyrinthe {
 
     
    
-    @Override
-   public String toString(){
+    
+   public String paint(){
        String boardaff="";
        for(int i=0;i<board.length;++i){
            for (int j=0;j<board[i].length;++j){
@@ -115,6 +116,8 @@ public class Labyrinthe {
        }
        return boardaff;
    }
+   public void afficher(){
+       System.out.println(paint());}
     public boolean estUnPacMan(int i , int j ){
         return board[i][j].getPerso()instanceof PacMan;
    }
@@ -146,21 +149,22 @@ public class Labyrinthe {
         if(estUnChampignon(i,j))
             score=score;        
    }
-   public void rienDeplace( ){
-        board[posInitX][posInitY]=new Case(new PacMan(posInitX,posInitY));
-        }
-   public void deplaceCase(int i , int j){
+   
+   private void deplaceCase(int i , int j){
          board[posInitX][posInitY]=new Case();
          board[i][j]=new Case(new PacMan(i,j));
          posInitX=i;posInitY=j;
    }
-   public void perdreVie(){
+   private void rienDeplace(){
+    board[posInitX][posInitY]=new Case(new PacMan(posInitX,posInitY));
+   }
+   private void perdreVie(){
         nbrVies--;
         board[posInitX][posInitY]=new Case() ;
         board[posx][posy]=new Case(new PacMan(posx,posy));
         posInitX=posx;posInitY=posy;
     }
-   public void deplacer(int i, int j){
+   private void deplacer(int i, int j){
        
         if(estUnAliment(i,j)){
             mange(i,j);
@@ -174,43 +178,111 @@ public class Labyrinthe {
             }
             else 
                 perdreVie();    
-        }
-        else if(estUnMur(i,j))
+        } 
+        else if (estUnMur(i,j))
             rienDeplace();
         else 
             deplaceCase(i,j);
    }
+  
    
+ 
+   
+  public void affMsg(String msg){
+      System.out.println(msg);
+  }
+  
+   private int nombreSaisi() {
+        int entree = 0;
+        boolean entreeOK = false;
+        while (!entreeOK) {
+            try {
+                entree = Integer.parseInt(scanner.next());
+                entreeOK = true;
+            } catch (NumberFormatException e) {
+                entreeIncorrecte();
+            }
+        }
+        return entree;
+    }
+   
+   private void entreeIncorrecte(){
+        affMsg(" Votre choix pas Valide ! 0 : deplacer Bas, 1 : deplacer Gauche, 2 : deplacer Haut, 3 : deplacer droite");
+   }
+   
+   private int rangeValidationSaisie( int nMax) {
+        int choixDirection = nombreSaisi();         
+        if (choixDirection < 0 || choixDirection > nMax) {
+            return -1;
+        }
+        return choixDirection;
+    }
+   
+   private int trySaisirChoixDirection() {
+        
+        return rangeValidationSaisie( Direction.values().length);
+    }
+   
+     public Direction saisirChoixDirection() {
+        int choixInt = trySaisirChoixDirection();
+        while (choixInt == -1) {
+            entreeIncorrecte();
+            choixInt = trySaisirChoixDirection();
+        }
+        return Direction.getByInt(choixInt);
+    }
+     
+     public void affichageLancement(){
+        afficher();
+        affMsg("Score : "+score+" "+"Nombre de vies restantes : "+nbrVies);
+     }
+     
+     public void deriger(){
+        Direction d=null;
+        d=saisirChoixDirection();
+          switch(d){
+              case NORD : deplacerHaut();break;
+              case SUD : deplacerBas();break;
+              case EST : deplacerDroite();break;
+              case OUEST: deplacerGauche();break;
+          }
+}
+  public void deplacerGauche(){
+    deplacer(posInitX,(posInitY-1));
+  }
+  
+  
+  public void deplacerDroite(){
+    deplacer(posInitX,(posInitY+1));
+  }
+  
+  public void deplacerHaut(){
+    deplacer((posInitX-1),posInitY);
+  }
+  
+  public void deplacerBas(){
+    deplacer((posInitX+1),posInitY);
+  }
+  
+  public void lancer(){
+      do{
+          affichageLancement();
+          deriger();
+        }while(nbrVies>=0);
+      affMsg("fin de partie : nombre de vies epuiséé : ");
+      
+      
+  }
 
+
+  
    
     public static void main(String[] args) {
         Labyrinthe lab=new Labyrinthe();
-        System.out.print(lab);
-        Scanner input = new Scanner(System.in);
-        String lettre=input.nextLine();
-        while (nbrVies>=0){
-        System.out.println("Score : "+lab.score+" "+"Nombre de vies restantes : "+lab.nbrVies);
-        lettre=input.nextLine();
-        switch(lettre.toUpperCase()){
-            case "H" : 
-                lab.deplacer((posInitX-1),posInitY);
-                System.out.print(lab);
-                 break;
-           case "B" : lab.deplacer((posInitX+1),posInitY);
-                 System.out.print(lab);
-                 break;
-
-           case "G" : lab.deplacer(posInitX,(posInitY-1));
-                System.out.print(lab);
-                break;
-
-            case "D" : lab.deplacer(posInitX,(posInitY+1));
-                System.out.print(lab);
-                break;
-        }
-        }  
+        lab.lancer();
+        
     }
-    }
+}
     
         
         
