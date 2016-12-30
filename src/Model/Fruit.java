@@ -2,17 +2,32 @@
 package Model;
 
 
-public class Fruit implements Aliment {
-    public Fruit(){
-        
-    }
+public class Fruit extends Element {
+    
     @Override
     public String toString(){
         return " § ";
     }
+
     @Override
-    public boolean equals(Object o){
-        return o instanceof Fruit;
+    public boolean isPacgomme() {
+        return false;
     }
+
+    @Override
+    public boolean isFruit() {
+       return true;
+    }
+
+    @Override
+    public boolean isChampignon() {
+        return false;
+    }
+
+    @Override
+    public boolean isMur() {
+        return false;
+    }
+   
     
 }

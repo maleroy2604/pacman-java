@@ -1,15 +1,19 @@
-
 package Model;
 
-
-public class PacMan extends  Personnage {
+public class PacMan extends Personnage {
     
-    public PacMan(int posx, int posy) {
-        super(posx, posy);
-    }
     @Override
-    public String toString(){
+    public String toString() {
         return " P ";
     }
-   
+
+    @Override
+    public boolean isFantome() {
+       return false;
+    }
+    @Override
+    public boolean isPacMan(){
+        return true;
+        
+    }
 }

@@ -3,45 +3,61 @@ package Model;
 
 
 public class Case {
-    private int x;
-    private int y;
+    private Position pos;
     private Element elem;
     private Personnage perso;
     
-    public  Case(Element elem,int x ,int y){
-        this.elem=elem;
-        this.x=x;
-        this.y=y;
-    }
-    public Case(Personnage perso){
-        
+    public Case(Personnage perso ,Position pos){
         this.perso=perso;
-        
-       
+        this.pos=pos;
     }
     
+    public  Case(Element elem,Position pos ){
+        this.elem=elem;
+        this.pos=pos;
+       
+    }
     public  Case(){
         
     }
-    public void resetCase(){
-        elem=null;
-    }
-    Element getElem(){
+   
+    public  Element getElem(){
         return this.elem;
     }
-    public int getX(){
-        return this.x;
+    public Position getPosition(){
+        return pos;
     }
-    public int getY(){
-        return this.y;
+    public Personnage getPerso(){
+        return perso;
     }
     
-    Personnage getPerso(){
-        return this.perso;
+    public void  setElem(Element elem  ,Position pos){
+        this.elem=elem;
+        this.pos=pos;
     }
+    public void setPerso(Personnage perso,Position pos ){
+        this.perso=perso;
+        this.pos=pos;
+    }
+   public void setPostion(Position pos ){
+       this.pos=pos;
+   }
+   public boolean estUnPerso(){
+       return perso!=null;
+   }
+   public boolean estUnElement(){
+       return elem!=null;
+   }
+   
    
     @Override
    public  String toString(){
         return "   ";
     }
+   public boolean equals(Object o){
+        if(o instanceof Case)
+            return this.elem==((Case) o).getElem() || this.perso==((Case) o).getPerso();
+        else 
+            return  false;
+   }
 }

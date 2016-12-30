@@ -2,16 +2,30 @@
 package Model;
 
 
-public class Pacgomme implements Aliment{
-    public Pacgomme(){
-        
-    }
+public class Pacgomme extends Element{
+    
+    
+  public boolean isPacgomme(){
+      return true;
+  }
     @Override
     public String toString(){
         return " . ";
-    }
+   
+}
+
     @Override
-    public boolean equals(Object o){
-        return o instanceof Pacgomme;
+    public boolean isFruit() {
+        return false;
+    }
+
+    @Override
+    public boolean isChampignon() {
+        return false;
+    }
+
+    @Override
+    public boolean isMur() {
+        return false;
     }
 }

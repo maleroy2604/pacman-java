@@ -2,16 +2,31 @@
 package Model;
 
 
-public class Champignon implements Aliment  {
-    public Champignon(){
-        
-    }
+public class Champignon extends Element  {
+    
+    
+   @Override
+   public String toString(){
+    return " C ";
+   }
+
     @Override
-    public String toString(){
-        return " C ";
+    public boolean isPacgomme() {
+        return false;
     }
+
     @Override
-    public boolean equals(Object o ){
-        return o instanceof Champignon;
+    public boolean isFruit() {
+        return false;
+    }
+
+    @Override
+    public boolean isChampignon() {
+        return true;
+    }
+
+    @Override
+    public boolean isMur() {
+        return false;
     }
 }

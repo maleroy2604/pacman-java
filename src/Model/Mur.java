@@ -2,17 +2,32 @@
 package Model;
 
 
-public class Mur implements Element {
-     public Mur(){
-         
-     }
+public class Mur extends Element  {
+  
    
      @Override
     public String toString(){
-        return " X ";
+        return "XXX";
     }
-     @Override
-    public boolean equals (Object o ){
-        return o instanceof Mur;
+
+    @Override
+    public boolean isPacgomme() {
+       return false;
     }
+
+    @Override
+    public boolean isFruit() {
+        return false;
+    }
+
+    @Override
+    public boolean isChampignon() {
+        return false;
+    }
+
+    @Override
+    public boolean isMur() {
+        return true;
+    }
+    
 }
