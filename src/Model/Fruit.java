@@ -1,11 +1,9 @@
-
 package Model;
 
-
 public class Fruit extends Element {
-    
+
     @Override
-    public String toString(){
+    public String toString() {
         return " § ";
     }
 
@@ -16,7 +14,7 @@ public class Fruit extends Element {
 
     @Override
     public boolean isFruit() {
-       return true;
+        return true;
     }
 
     @Override
@@ -28,6 +26,5 @@ public class Fruit extends Element {
     public boolean isMur() {
         return false;
     }
-   
-    
+
 }

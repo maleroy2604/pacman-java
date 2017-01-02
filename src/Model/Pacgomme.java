@@ -1,18 +1,17 @@
-
 package Model;
 
+public class Pacgomme extends Element {
 
-public class Pacgomme extends Element{
-    
-    
-  public boolean isPacgomme(){
-      return true;
-  }
     @Override
-    public String toString(){
+    public boolean isPacgomme() {
+        return true;
+    }
+
+    @Override
+    public String toString() {
         return " . ";
-   
-}
+
+    }
 
     @Override
     public boolean isFruit() {

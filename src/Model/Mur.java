@@ -1,18 +1,15 @@
-
 package Model;
 
+public class Mur extends Element {
 
-public class Mur extends Element  {
-  
-   
-     @Override
-    public String toString(){
+    @Override
+    public String toString() {
         return "XXX";
     }
 
     @Override
     public boolean isPacgomme() {
-       return false;
+        return false;
     }
 
     @Override
@@ -29,5 +26,5 @@ public class Mur extends Element  {
     public boolean isMur() {
         return true;
     }
-    
+
 }

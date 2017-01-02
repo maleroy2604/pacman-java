@@ -3,6 +3,7 @@ package Model;
 
 
 public class Fantome extends Personnage {
+    @Override
     public boolean isFantome(){
         return true;
     }

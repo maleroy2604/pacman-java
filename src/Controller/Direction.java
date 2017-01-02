@@ -1,7 +1,9 @@
-package Model;
+
+package Controller;
+
 
 public enum Direction {
-    SUD("deplacer vers le bas"), OUEST("deplacer vers la gauche"), NORD("deplacer vers le haut"), EST("deplacer vers la droite");
+     SUD("deplacer vers le bas"), OUEST("deplacer vers la gauche"), NORD("deplacer vers le haut"), EST("deplacer vers la droite");
     private final String msg;
 
     public int numero() {
@@ -12,7 +14,8 @@ public enum Direction {
         this.msg = msg;
     }
 
-    public String toSting() {
+     @Override
+    public String toString() {
         return msg;
     }
 
@@ -22,5 +25,4 @@ public enum Direction {
         }
         return Direction.values()[choix];
     }
-
 }

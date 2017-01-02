@@ -1,14 +1,11 @@
-
 package Model;
 
+public class Champignon extends Element {
 
-public class Champignon extends Element  {
-    
-    
-   @Override
-   public String toString(){
-    return " C ";
-   }
+    @Override
+    public String toString() {
+        return " C ";
+    }
 
     @Override
     public boolean isPacgomme() {
