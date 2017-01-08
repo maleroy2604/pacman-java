@@ -19,26 +19,26 @@ public abstract class Personnage {
             if (c.getPerso().isFantome()) {
                 return pacManVsFantome(c, p);
             }
-        
+
         } else if (c.estUnElement()) {
-           return  pacManVsUnElement(c, p);
+            return pacManVsUnElement(c, p);
         }
-        
+
         return false;
     }
-        
-   private boolean pacManVsUnElement(Case c,Position p){
-       if (c.estUnAliment()) {
-                mange(c, p);
-                c.setPerso(new PacMan(), p);
-                return true;
-            } else {
-                return false;
-            }
-       
-   }    
 
-   private boolean pacManVsFantome(Case c, Position p) {
+    private boolean pacManVsUnElement(Case c, Position p) {
+        if (c.estUnAliment()) {
+            mange(c, p);
+            c.setPerso(new PacMan(), p);
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    private boolean pacManVsFantome(Case c, Position p) {
 
         if (superPacMan) {
             mangerFantome();
@@ -51,14 +51,15 @@ public abstract class Personnage {
     }
 
     private void mangerFantome() {
-             bonus += 20;
-            ++nbFant;
-   }
-    
-    public boolean getSuperPacman(){
+        bonus += 20;
+        ++nbFant;
+    }
+
+    public boolean getSuperPacman() {
         return this.superPacMan;
     }
-   private void mange(Case c, Position p) {
+
+    private void mange(Case c, Position p) {
 
         if (c.getElem().isPacgomme()) {
             bonus += 1;
@@ -77,17 +78,18 @@ public abstract class Personnage {
     public int getNbrVies() {
         return nbrVies;
     }
-    public int getNbFant(){
-        
+
+    public int getNbFant() {
+
         return nbFant;
     }
-   public void setBonus(int b){
-       this.bonus=b;
-   }
-   public void setNbrVies(int a){
-       this.nbrVies=a;
-   }
 
-  
+    public void setBonus(int b) {
+        this.bonus = b;
+    }
+
+    public void setNbrVies(int a) {
+        this.nbrVies = a;
+    }
 
 }

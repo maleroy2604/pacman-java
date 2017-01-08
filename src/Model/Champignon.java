@@ -1,6 +1,6 @@
 package Model;
 
-public class Champignon extends Element {
+public class Champignon implements Element {
 
     @Override
     public String toString() {

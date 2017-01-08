@@ -55,7 +55,7 @@ public class Labyrinthe {
 
         Random generateur = new Random();
         Case caseFant = fantomeRandom.remove(generateur.nextInt(fantomeRandom.size()));
-      caseFant.setPerso(new Fantome(), caseFant.getPosition());
+        caseFant.setPerso(new Fantome(), caseFant.getPosition());
 
     }
 
@@ -90,24 +90,6 @@ public class Labyrinthe {
         }
     }
 
-    private String paint() {
-        String boardaff = "";
-        for (int i = 0; i < board.length; ++i) {
-            for (int j = 0; j < board[i].length; ++j) {
-
-                if (board[i][j].estUnPerso()) {
-                    boardaff += board[i][j].getPerso().toString();
-                } else if (board[i][j].estUnElement()) {
-                    boardaff += board[i][j].getElem().toString();
-                } else {
-                    boardaff += board[i][j].toString();
-                }
-            }
-            boardaff += "\n";
-        }
-        return boardaff;
-    }
-
     void initialise(Position p) {
         board[posCourante.getX()][posCourante.getY()] = new Case();
         posCourante = p;
@@ -140,10 +122,7 @@ public class Labyrinthe {
         return posInitiale;
     }
 
-    public void afficher() {
-        System.out.println(paint());
-    }
-    public Case[][] getBoard(){
+    public Case[][] getBoard() {
         return this.board;
     }
 }

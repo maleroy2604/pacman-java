@@ -1,6 +1,6 @@
 package Model;
 
-public class Pacgomme extends Element {
+public class Pacgomme implements Element {
 
     @Override
     public boolean isPacgomme() {

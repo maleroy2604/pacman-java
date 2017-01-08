@@ -1,13 +1,13 @@
 package Model;
 
-public abstract class Element {
+public interface Element {
 
-    public abstract boolean isPacgomme();
+    public  boolean isPacgomme();
 
-    public abstract boolean isFruit();
+    public  boolean isFruit();
 
-    public abstract boolean isChampignon();
+    public  boolean isChampignon();
 
-    public abstract boolean isMur();
+    public  boolean isMur();
 
 }

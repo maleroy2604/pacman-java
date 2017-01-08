@@ -26,7 +26,7 @@ public class Case {
     }
 
     public boolean estUnAliment() {
-        return getElem().isChampignon() || getElem().isFruit() || getElem().isPacgomme();
+       return getElem().isChampignon() || getElem().isFruit() || getElem().isPacgomme();
     }
 
     public Element getElem() {

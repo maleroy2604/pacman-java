@@ -1,6 +1,6 @@
 package Model;
 
-public class Mur extends Element {
+public class Mur implements Element {
 
     @Override
     public String toString() {

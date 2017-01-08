@@ -1,6 +1,6 @@
 package Model;
 
-public class Fruit extends Element {
+public class Fruit implements Element {
 
     @Override
     public String toString() {

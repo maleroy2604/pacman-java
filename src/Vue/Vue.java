@@ -39,7 +39,7 @@ public class Vue implements Observer{
         return rangeValidationSaisie(Direction.values().length);
     }
 
-    public static int rangeValidationSaisie(int nMax) {
+    private static int rangeValidationSaisie(int nMax) {
         int choixDirection = nombreSaisi();
         if (choixDirection < 0 || choixDirection > nMax) {
             return -1;

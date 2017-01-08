@@ -1,16 +1,9 @@
 package Model;
 
-
 import java.util.Observable;
 
+public class Game extends Observable {
 
-
-
-
-
-
-public class Game extends Observable{
-   
     private Labyrinthe lab;
     Personnage perso;
 
@@ -31,7 +24,7 @@ public class Game extends Observable{
 
     }
 
-    public void retourCaseInitial() {
+    private void retourCaseInitial() {
         lab.setCase(lab.getCase(lab.getPosCourante()), lab.getInitialPosition());
         lab.setCase(new Case(), lab.getPosCourante());
         lab.setPosCourante(lab.getInitialPosition());
@@ -49,9 +42,10 @@ public class Game extends Observable{
     public boolean finDePartie() {
         return perso.getNbFant() == 4 || perso.getNbrVies() < 0;
     }
-    public void setChangeAndNotify(Object obj){
+
+    public void setChangeAndNotify(Object obj) {
         setChanged();
         notifyObservers(obj);
     }
-    
+
 }
