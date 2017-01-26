@@ -22,9 +22,11 @@ public class Vue implements Observer{
 
                 if (lab.getBoard()[i][j].estUnPerso()) {
                     boardaff += lab.getBoard()[i][j].getPerso().toString();
-                } else if (lab.getBoard()[i][j].estUnElement()) {
-                    boardaff += lab.getBoard()[i][j].getElem().toString();
-                } else {
+                } else if (lab.getBoard()[i][j].estUnAliment()) {
+                    boardaff += lab.getBoard()[i][j].getAlim().toString();
+                } else if (lab.getBoard()[i][j].estUnMur()){
+                    boardaff += lab.getBoard()[i][j].getMur().toString();
+                }else{
                     boardaff += lab.getBoard()[i][j].toString();
                 }
             }

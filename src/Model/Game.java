@@ -5,7 +5,7 @@ import java.util.Observable;
 public class Game extends Observable {
 
     private Labyrinthe lab;
-    Personnage perso;
+   Personnage perso;
 
     public Game() {
         this.lab = new Labyrinthe();
@@ -14,19 +14,20 @@ public class Game extends Observable {
     }
 
     public void deplacer(Position p) {
-        if (perso.deplacer(lab.getCase(p), p)) {
+        if (perso.deplacer(lab.getCase(p))) {
             lab.initialise(p);
-        } else if (lab.getCase(p).estUnPerso()) {
-            if (lab.getCase(p).getPerso().isFantome() && perso.getSuperPacman() == false) {
-                retourCaseInitial();
-            }
+        } else {
+            if(!lab.getCase(p).estUnMur())
+                retourCaseInitial(perso);
+
         }
 
     }
 
-    private void retourCaseInitial() {
-        lab.setCase(lab.getCase(lab.getPosCourante()), lab.getInitialPosition());
-        lab.setCase(new Case(), lab.getPosCourante());
+    private void retourCaseInitial(Personnage perso) {
+        lab.getCase(lab.getInitialPosition()).placePerso(perso);
+        lab.getCase(lab.getPosCourante()).retirePerso();
+        
         lab.setPosCourante(lab.getInitialPosition());
 
     }
@@ -36,11 +37,11 @@ public class Game extends Observable {
     }
 
     public String ScoreViesRestante() {
-        return "Score : " + perso.getBonus() + " " + "Nombre de vies restantes : " + perso.getNbrVies();
+        return "Score : " + perso.getBonus() + " " + "Nombre de vies restantes : " + perso.getNbrVies() ;
     }
 
     public boolean finDePartie() {
-        return perso.getNbFant() == 4 || perso.getNbrVies() < 0;
+        return perso.getNbrFant() == 0 || perso.getNbrVies() < 0;
     }
 
     public void setChangeAndNotify(Object obj) {

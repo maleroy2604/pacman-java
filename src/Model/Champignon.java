@@ -1,6 +1,6 @@
 package Model;
 
-public class Champignon implements Element {
+public class Champignon implements Aliment {
 
     @Override
     public String toString() {
@@ -8,22 +8,13 @@ public class Champignon implements Element {
     }
 
     @Override
-    public boolean isPacgomme() {
-        return false;
-    }
-
-    @Override
-    public boolean isFruit() {
-        return false;
-    }
-
-    @Override
-    public boolean isChampignon() {
+    public boolean estMangerPar(PacMan p) {
+        p.manger(0);
         return true;
     }
 
-    @Override
-    public boolean isMur() {
-        return false;
-    }
+    
+    
+
+   
 }

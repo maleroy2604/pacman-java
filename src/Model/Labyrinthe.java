@@ -10,6 +10,7 @@ public class Labyrinthe {
     private Position posInitiale, posCourante;
     private List<Case> fantomeRandom = new LinkedList<>();
     private Case[][] board = new Case[TAB.length][TAB[0].length];
+    private int nbrGomme;
     private static final int[][] TAB = {
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
         {1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1},
@@ -37,6 +38,7 @@ public class Labyrinthe {
         {1, 6, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 6, 1},
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
     };
+    
 
     public Labyrinthe() {
 
@@ -55,9 +57,10 @@ public class Labyrinthe {
 
         Random generateur = new Random();
         Case caseFant = fantomeRandom.remove(generateur.nextInt(fantomeRandom.size()));
-        caseFant.setPerso(new Fantome(), caseFant.getPosition());
+        caseFant.setPerso(new Fantome());
 
     }
+    
 
     private void choixElement(int caseInt, Position pos) {
 
@@ -73,7 +76,7 @@ public class Labyrinthe {
                 break;
             case (4):
                 board[pos.getX()][pos.getY()] = new Case(new Pacgomme(), pos);
-                fantomeRandom.add(board[pos.getX()][pos.getY()]);
+                fantomeRandom.add(board[pos.getX()][pos.getY()]);++nbrGomme;
                 break;
             case (5):
                 board[pos.getX()][pos.getY()] = new Case(new Fruit(), pos);
@@ -84,14 +87,14 @@ public class Labyrinthe {
                 fantomeRandom.add(board[pos.getX()][pos.getY()]);
                 break;
             default:
-                board[pos.getX()][pos.getY()] = new Case();
+                board[pos.getX()][pos.getY()] = new Case(pos);
                 break;
 
         }
     }
 
     void initialise(Position p) {
-        board[posCourante.getX()][posCourante.getY()] = new Case();
+        board[posCourante.getX()][posCourante.getY()].retirePerso();
         posCourante = p;
     }
 
@@ -105,10 +108,7 @@ public class Labyrinthe {
 
     }
 
-    public void setCase(Case c, Position p) {
-        board[p.getX()][p.getY()] = c;
-
-    }
+    
 
     public void setPosCourante(Position posCour) {
         this.posCourante = posCour;
@@ -124,5 +124,8 @@ public class Labyrinthe {
 
     public Case[][] getBoard() {
         return this.board;
+    }
+    public int getNbrGomme(){
+        return nbrGomme;
     }
 }

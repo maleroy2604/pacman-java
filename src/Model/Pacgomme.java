@@ -1,11 +1,6 @@
 package Model;
 
-public class Pacgomme implements Element {
-
-    @Override
-    public boolean isPacgomme() {
-        return true;
-    }
+public class Pacgomme implements Aliment {
 
     @Override
     public String toString() {
@@ -14,17 +9,11 @@ public class Pacgomme implements Element {
     }
 
     @Override
-    public boolean isFruit() {
-        return false;
+    public boolean estMangerPar(PacMan p) {
+       p.manger(1);
+       return true;
     }
 
-    @Override
-    public boolean isChampignon() {
-        return false;
-    }
+    
 
-    @Override
-    public boolean isMur() {
-        return false;
-    }
 }
