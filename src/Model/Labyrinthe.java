@@ -10,7 +10,7 @@ public class Labyrinthe {
     private Position posInitiale, posCourante;
     private List<Case> fantomeRandom = new LinkedList<>();
     private Case[][] board = new Case[TAB.length][TAB[0].length];
-    private int nbrGomme;
+    
     private static final int[][] TAB = {
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
         {1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1},
@@ -76,7 +76,7 @@ public class Labyrinthe {
                 break;
             case (4):
                 board[pos.getX()][pos.getY()] = new Case(new Pacgomme(), pos);
-                fantomeRandom.add(board[pos.getX()][pos.getY()]);++nbrGomme;
+                fantomeRandom.add(board[pos.getX()][pos.getY()]);
                 break;
             case (5):
                 board[pos.getX()][pos.getY()] = new Case(new Fruit(), pos);
@@ -125,7 +125,5 @@ public class Labyrinthe {
     public Case[][] getBoard() {
         return this.board;
     }
-    public int getNbrGomme(){
-        return nbrGomme;
-    }
+   
 }

@@ -21,6 +21,7 @@ public class Game extends Observable {
                 retourCaseInitial(perso);
 
         }
+        setChangeAndNotify(this);
 
     }
 
@@ -35,13 +36,15 @@ public class Game extends Observable {
     public Labyrinthe getLab() {
         return lab;
     }
-
+    public Personnage getPerso(){
+        return perso;
+    }
     public String ScoreViesRestante() {
-        return "Score : " + perso.getBonus() + " " + "Nombre de vies restantes : " + perso.getNbrVies() ;
+        return "Gomme : "+perso.getNbrGomme()+" - Fantome"+ perso.getNbrFant()+" - Vies Pacman : " + perso.getNbrVies()+" - Score : " + perso.getBonus() ;
     }
 
     public boolean finDePartie() {
-        return perso.getNbrFant() == 0 || perso.getNbrVies() < 0;
+        return perso.getNbrFant() == 0 || perso.getNbrVies() <= 0;
     }
 
     public void setChangeAndNotify(Object obj) {

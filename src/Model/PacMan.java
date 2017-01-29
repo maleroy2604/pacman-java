@@ -1,21 +1,31 @@
 package Model;
 
-public class PacMan extends Personnage {
 
-    private boolean superPacMan = false;
+
+public class PacMan extends Personnage {
+    
+    
+    
     @Override
     public String toString() {
         return " P ";
     }
-    public boolean mangeFant(){
-         if (superPacMan) {
-                bonus+=20;
-                --nbrFant;
-                return true;
-            } else {
-                --nbrVies;
-                return false;
-            }
+
+    public PacMan() {
+        super();
+        nbrVies = 2;
+    }
+
+    public boolean mangeFant() {
+        if (superPacMan) {
+            bonus += 20;
+            --nbrFant;
+            ++nbrGomme;
+            return true;
+        } else {
+            --nbrVies;
+            return false;
+        }
     }
 
     @Override
@@ -24,14 +34,15 @@ public class PacMan extends Personnage {
             return true;
         }
         if (c.estUnPerso()) {
+
             return mangeFant();
-           
+            
         }
-        if(c.estUnAliment()){
+        if (c.estUnAliment()) {
             c.getAlim().estMangerPar(this);
             return true;
         }
-         return false;   
+        return false;
 
     }
 
@@ -48,12 +59,14 @@ public class PacMan extends Personnage {
     public void estSuperPacMan(boolean val) {
         superPacMan = val;
     }
-    public void manger(int a){
-        bonus+=a;
+
+    public void manger(int a) {
+        bonus += a;
     }
-
- 
-
-   
+    public void augmenterGomme(int valeur){
+        nbrGomme+=valeur;
+    }
+    
+    
 
 }

@@ -11,6 +11,7 @@ public class Pacgomme implements Aliment {
     @Override
     public boolean estMangerPar(PacMan p) {
        p.manger(1);
+       p.augmenterGomme(1);
        return true;
     }
 
