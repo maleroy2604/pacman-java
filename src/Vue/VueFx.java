@@ -85,6 +85,8 @@ public class VueFx implements Observer {
                     }
                 } else if (game.getLab().getBoard()[i][j].isEmpty()) {
                     VueVide.paintOn(gc, i, j);
+                }else if(game.getLab().getBoard()[i][j].contientFantome()){
+                    VueFant.paintOn(gc, i, j, game);
                 }
 
             }

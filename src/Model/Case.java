@@ -51,7 +51,7 @@ public class Case {
     public void setFantome(Fantome f){
         this.listFant.add(f);
     }
-    public void retirfantome(){
+    public void retirefantome(){
         this.listFant.remove(listFant.size()-1);
     }
     public PacMan getPacman(){
@@ -84,6 +84,7 @@ public class Case {
 
     public void placePacman(PacMan p) {
         this.setPacman(p);
+         
 
     }
     
@@ -93,6 +94,7 @@ public class Case {
     public void retirePacman() {
         this.setPacman(null);
         this.setAlim(null);
+      
     }
 
     public void effacerCase(PacMan p) {

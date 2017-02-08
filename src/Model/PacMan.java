@@ -16,11 +16,12 @@ public class PacMan extends Personnage {
         nbrVies = 2;
     }
 
-    public boolean mangeFant() {
+    public boolean mangeFant(Case c) {
         if (superPacMan) {
             bonus += 20;
             --nbrFant;
             ++nbrGomme;
+            c.retirefantome();
             return true;
         } else {
             --nbrVies;
@@ -35,7 +36,7 @@ public class PacMan extends Personnage {
         }
         if (c.contientFantome()) {
 
-            return mangeFant();
+            return mangeFant(c);
             
         }
         if (c.contientAliment()) {
@@ -49,6 +50,7 @@ public class PacMan extends Personnage {
     @Override
     public boolean deplacer(Case c) {
         if (mange(c)) {
+            
             c.placePacman(this);
             return true;
         }
