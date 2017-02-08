@@ -3,6 +3,8 @@ package Model;
 
 
 public class Fantome extends Personnage {
+    
+    public Fantome() {}
 
    
 
@@ -13,12 +15,26 @@ public class Fantome extends Personnage {
 
     @Override
     public boolean deplacer(Case c) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(mange(c)){
+            c.placePerso(this);
+            return true;
+        }
+            return false;
     }
 
     @Override
     public boolean mange(Case c) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(c.getPerso()!=this){
+            if(!c.getPerso().superPacMan){
+                --nbrVies;
+                return true;
+            }
+            return false;       
+        }
+        if(c.estUnAliment()){
+            return true;
+        }
+        return false;
     }
     
 

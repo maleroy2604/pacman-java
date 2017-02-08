@@ -33,12 +33,12 @@ public class PacMan extends Personnage {
         if (c.isEmpty()) {
             return true;
         }
-        if (c.estUnPerso()) {
+        if (c.contientFantome()) {
 
             return mangeFant();
             
         }
-        if (c.estUnAliment()) {
+        if (c.contientAliment()) {
             c.getAlim().estMangerPar(this);
             return true;
         }

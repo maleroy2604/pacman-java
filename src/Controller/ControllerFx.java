@@ -3,6 +3,9 @@ package Controller;
 import Model.Game;
 import Model.Position;
 import Vue.VueFx;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
 
@@ -14,6 +17,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class ControllerFx extends Application {
 
@@ -25,9 +29,21 @@ public class ControllerFx extends Application {
         VueFx vue = new VueFx(stage, game);
         deplacement();
         game.addObserver(vue);
+//        joueFantome(game);
 
     }
-
+//    private void joueFantome(Game game){
+//         Timeline timeline = new Timeline(new KeyFrame(
+//                Duration.millis(100),
+//                ae -> actionPeriodique(game))
+//        );
+//        timeline.setCycleCount(Animation.INDEFINITE);
+//        timeline.play();                
+//    }
+//    // private void actionPeriodique(Game game) {
+//     //   game.deplacerFantome(Direction.randomDirection());
+//   // }
+    
     private void deplacement() {
 
         this.root.setOnKeyPressed(new EventHandler<KeyEvent>() {

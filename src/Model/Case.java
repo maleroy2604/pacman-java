@@ -1,21 +1,28 @@
 package Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Case {
 
     private final Position pos;
     private Aliment alim;
-    private Personnage perso;
+    private PacMan pacman;
+    private List<Fantome> listFant=new ArrayList<>();
     private Mur mur;
 
-    public Case(Personnage perso, Position pos) {
-        this.perso = perso;
+    public Case(PacMan pacman, Position pos) {
+        this.pacman = pacman;
         this.pos = pos;
+    }
+    public Case(Fantome fant,Position pos){
+        this.listFant.add(fant);
+        this.pos=pos;
     }
 
     public Case(Aliment alim, Position pos) {
         this.alim = alim;
         this.pos = pos;
-
     }
 
     public Case(Mur mur, Position pos) {
@@ -25,10 +32,6 @@ public class Case {
 
     public Case(Position pos) {
         this.pos = pos;
-    }
-
-    public boolean isEmpty() {
-        return alim == null && perso == null && mur == null;
     }
 
     public Aliment getAlim() {
@@ -42,43 +45,55 @@ public class Case {
     public Position getPosition() {
         return pos;
     }
-
-    public Personnage getPerso() {
-        return perso;
+    public void setPacman(PacMan p){
+        this.pacman=p;
+    }
+    public void setFantome(Fantome f){
+        this.listFant.add(f);
+    }
+    public void retirfantome(){
+        this.listFant.remove(listFant.size()-1);
+    }
+    public PacMan getPacman(){
+        return this.pacman;
+    }
+    public List<Fantome> getFantome(){
+        return this.listFant;
     }
 
-    public void setPerso(Personnage perso) {
-        this.perso = perso;
 
-    }
+    
     public void setAlim(Aliment al){
         this.alim=al;
     }
 
-    public boolean estUnPerso() {
-        return perso != null;
+   public boolean contientPacman() {
+        return pacman != null;
+    }
+   public boolean contientFantome() {
+        return !(listFant.isEmpty());
     }
 
-    public boolean estUnMur() {
+    public boolean contientMur() {
         return mur != null;
     }
 
-    public boolean estUnAliment() {
+    public boolean contientAliment() {
         return alim != null;
     }
 
-    public void placePerso(Personnage p) {
-        this.setPerso(p);
+    public void placePerso(PacMan p) {
+        this.setPacman(p);
 
     }
 
-    public void retirePerso() {
-        this.setPerso(null);
+    public void retirePacman() {
+        this.setPacman(null);
         this.setAlim(null);
     }
 
     public void effacerCase(PacMan p) {
-        this.perso=p;
+        this.pacman=p;
         this.alim=null;
     }
 
@@ -86,6 +101,8 @@ public class Case {
     public String toString() {
         return "   ";
     }
-    
+    public boolean isEmpty(){
+        return !(contientPacman() && contientMur() && contientFantome() && contientAliment());
+    }
 
 }
