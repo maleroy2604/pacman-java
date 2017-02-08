@@ -26,8 +26,8 @@ public class Game extends Observable {
         if (pacman.deplacer(lab.getCase(p))) {
             lab.initialise(p);
         } else {
-            if(!lab.getCase(p).estUnMur())
-                retourCaseInitial(pacman);
+            if(!lab.getCase(p).contientMur())
+                retourCaseInitial();
 
         }
         setChangeAndNotify(this);
@@ -39,9 +39,9 @@ public class Game extends Observable {
         setChangeAndNotify(this);
 
     }
-    private void retourCaseInitial(Personnage perso) {
-        lab.getCase(lab.getInitialPosition()).placePerso();
-        lab.getCase(lab.getPosCourante()).retirePerso();
+    private void retourCaseInitial() {
+        lab.getCase(lab.getInitialPosition()).placePacman(pacman);
+        lab.getCase(lab.getPosCourante()).retirePacman();
         
         lab.setPosCourante(lab.getInitialPosition());
 
@@ -50,15 +50,15 @@ public class Game extends Observable {
     public Labyrinthe getLab() {
         return lab;
     }
-    public Personnage getPerso(int i){
-        return perso.get(i);
+    public Personnage getPerso(){
+        return pacman;
     }
     public String ScoreViesRestante() {
-        return "Gomme : "+perso.get(0).getNbrGomme()+" - Fantome"+ perso.get(0).getNbrFant()+" - Vies Pacman : " + perso.get(0).getNbrVies()+" - Score : " + perso.get(0).getBonus() ;
+        return "Gomme : "+pacman.getNbrGomme()+" - Fantome"+ pacman.getNbrFant()+" - Vies Pacman : " + pacman.getNbrVies()+" - Score : " +pacman.getBonus() ;
     }
 
     public boolean finDePartie() {
-        return perso.get(0).getNbrFant() == 0 || perso.get(0).getNbrVies() <= 0;
+        return pacman.getNbrFant() == 0 || pacman.getNbrVies() <= 0;
     }
 
     public void setChangeAndNotify(Object obj) {

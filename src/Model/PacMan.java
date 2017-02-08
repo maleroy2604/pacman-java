@@ -49,7 +49,7 @@ public class PacMan extends Personnage {
     @Override
     public boolean deplacer(Case c) {
         if (mange(c)) {
-            c.placePerso(this);
+            c.placePacman(this);
             return true;
         }
 

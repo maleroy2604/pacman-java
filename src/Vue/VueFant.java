@@ -13,16 +13,23 @@ public class VueFant  {
       private static final int TAILLE = 20;
      
      public static void paintOn(GraphicsContext gc,int i,int j,Game game ){
-         if(game.getPerso(0).getSuperPacMan()){
-             gc.drawImage(
-                       vide,
-                        j * 20,
-                        i * 20,
-                        TAILLE,
-                        TAILLE
-                );
-             
-         }else{
+//         if(game.getPerso().getSuperPacMan()){
+//             gc.drawImage(
+//                       vide,
+//                        j * 20,
+//                        i * 20,
+//                        TAILLE,
+//                        TAILLE
+//                );
+//             gc.drawImage(
+//                        fantZomb,
+//                        j * 20,
+//                        i * 20,
+//                        TAILLE,
+//                        TAILLE
+//                );
+//             
+//         }else{
              gc.drawImage(
                         fantome,
                         j * 20,
@@ -30,7 +37,7 @@ public class VueFant  {
                         TAILLE,
                         TAILLE
                 );
-         }
+//         }
          
      }
     

@@ -82,11 +82,14 @@ public class Case {
         return alim != null;
     }
 
-    public void placePerso(PacMan p) {
+    public void placePacman(PacMan p) {
         this.setPacman(p);
 
     }
-
+    
+    public void placeFantome(Fantome f){
+        setFantome(f);
+    }
     public void retirePacman() {
         this.setPacman(null);
         this.setAlim(null);
@@ -102,7 +105,7 @@ public class Case {
         return "   ";
     }
     public boolean isEmpty(){
-        return !(contientPacman() && contientMur() && contientFantome() && contientAliment());
+        return mur==null && alim==null && pacman==null && listFant.isEmpty() ;
     }
 
 }

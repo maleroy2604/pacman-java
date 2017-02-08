@@ -16,7 +16,7 @@ public class Fantome extends Personnage {
     @Override
     public boolean deplacer(Case c) {
         if(mange(c)){
-            c.placePerso(this);
+            c.placeFantome(this);
             return true;
         }
             return false;
@@ -24,14 +24,14 @@ public class Fantome extends Personnage {
 
     @Override
     public boolean mange(Case c) {
-        if(c.getPerso()!=this){
-            if(!c.getPerso().superPacMan){
+        if(c.contientPacman()){
+            if(!c.getPacman().superPacMan){
                 --nbrVies;
                 return true;
             }
             return false;       
         }
-        if(c.estUnAliment()){
+        if(c.contientAliment()){
             return true;
         }
         return false;

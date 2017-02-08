@@ -71,15 +71,11 @@ public class VueFx implements Observer {
     public void choixElem(GraphicsContext gc, Game game) {
         for (int i = 0; i < game.getLab().getBoard().length; ++i) {
             for (int j = 0; j < game.getLab().getBoard()[i].length; ++j) {
-                if (game.getLab().getBoard()[i][j].estUnMur()) {
+                if (game.getLab().getBoard()[i][j].contientMur()) {
                     VueMur.paintOn(gc, i, j);
-                } else if (game.getLab().getBoard()[i][j].estUnPerso()) {
-                    if((game.getLab().getBoard()[i][j].getPerso() instanceof PacMan)){
-                        VuePacMan.paintOn(gc, i, j);
-                    }else{
-                        VueFant.paintOn(gc, i, j,game);
-                    }
-                } else if (game.getLab().getBoard()[i][j].estUnAliment()) {
+                } else if (game.getLab().getBoard()[i][j].contientPacman() ) {
+                   VuePacMan.paintOn(gc, i, j,game);
+                } else if (game.getLab().getBoard()[i][j].contientAliment()) {
                     if((game.getLab().getBoard()[i][j].getAlim()instanceof Fruit)){
                         VueFruit.paintOn(gc, i, j);
                     }else if(game.getLab().getBoard()[i][j].getAlim()instanceof Pacgomme){

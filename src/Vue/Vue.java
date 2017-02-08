@@ -20,11 +20,11 @@ public class Vue implements Observer{
         for (int i = 0; i < lab.getBoard().length; ++i) {
             for (int j = 0; j < lab.getBoard()[i].length; ++j) {
 
-                if (lab.getBoard()[i][j].estUnPerso()) {
-                    boardaff += lab.getBoard()[i][j].getPerso().toString();
-                } else if (lab.getBoard()[i][j].estUnAliment()) {
+                if (lab.getBoard()[i][j].contientPacman()) {
+                    boardaff += lab.getBoard()[i][j].getPacman().toString();
+                } else if (lab.getBoard()[i][j].contientAliment()) {
                     boardaff += lab.getBoard()[i][j].getAlim().toString();
-                } else if (lab.getBoard()[i][j].estUnMur()){
+                } else if (lab.getBoard()[i][j].contientMur()){
                     boardaff += lab.getBoard()[i][j].getMur().toString();
                 }else{
                     boardaff += lab.getBoard()[i][j].toString();
