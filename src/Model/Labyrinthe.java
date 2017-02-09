@@ -104,12 +104,17 @@ public class Labyrinthe {
         return posCourante;
     }
 
-    public Case getCase(Position p) {
+    public PacMan getPacman(Position p) {
 
-        return board[p.getX()][p.getY()];
+        return board[p.getX()][p.getY()].getPacman();
 
     }
-
+    public Case getCase( Position p){
+        return board[p.getX()][p.getY()];
+    }
+    public List<Fantome>  getFantome(Position p){
+       return board[p.getX()][p.getY()].getFantome();
+    }
     
 
     public void setPosCourante(Position posCour) {

@@ -52,7 +52,7 @@ public class Case {
         this.listFant.add(f);
     }
     public void retirefantome(){
-        this.listFant.remove(listFant.size()-1);
+        this.listFant.clear();
     }
     public PacMan getPacman(){
         return this.pacman;

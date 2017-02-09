@@ -13,15 +13,26 @@ public class Game extends Observable {
 
     public Game() {
        this.lab = new Labyrinthe();
-       pacman=lab.getCase(lab.getInitialPosition()).getPacman();
+       pacman=getPacman(lab.getInitialPosition());
       for(int i=0; i<lab.tailListPosFant();++i){
-           listFant.addAll(lab.getCase(lab.positionFantomeInit(i)).getFantome())  ;
+           listFant.addAll(getFantome(lab.positionFantomeInit(i)))  ;
        
       }
      
 
     }
-
+    
+    public PacMan getPacman(Position p){
+       return  lab.getPacman(p);
+    }
+    public Case getCase(Position p){
+        return lab.getCase(p);
+    }
+    public List<Fantome> getFantome(Position p){
+        return lab.getFantome(p);
+        
+    }
+    
     public void deplacer(Position p) {
         if (pacman.deplacer(lab.getCase(p))) {
             lab.initialise(p);
