@@ -73,6 +73,8 @@ public class VueFx implements Observer {
             for (int j = 0; j < game.getLab().getBoard()[i].length; ++j) {
                 if (game.getLab().getBoard()[i][j].contientMur()) {
                     VueMur.paintOn(gc, i, j);
+                 }else if(game.getLab().getBoard()[i][j].contientFantome()){
+                    VueFant.paintOn(gc, i, j, game);
                 } else if (game.getLab().getBoard()[i][j].contientPacman() ) {
                    VuePacMan.paintOn(gc, i, j,game);
                 } else if (game.getLab().getBoard()[i][j].contientAliment()) {
@@ -85,8 +87,7 @@ public class VueFx implements Observer {
                     }
                 } else if (game.getLab().getBoard()[i][j].isEmpty()) {
                     VueVide.paintOn(gc, i, j);
-                }else if(game.getLab().getBoard()[i][j].contientFantome()){
-                    VueFant.paintOn(gc, i, j, game);
+               
                 }
 
             }

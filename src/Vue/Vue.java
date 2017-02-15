@@ -1,8 +1,11 @@
 package Vue;
 
 import Controller.Direction;
+import Model.Fantome;
+
 import Model.Game;
-import Model.Labyrinthe;
+import Model.Position;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
@@ -15,20 +18,25 @@ public class Vue implements Observer{
     }
     private Vue(){}
 
-    public static void affiche(Labyrinthe lab) {
+    public static boolean  verifPos(List<Fantome> listFant,Position pos){
+        for(Fantome fant :listFant){
+            if (fant.getPosFant().equals(pos))
+                return true;
+        }
+        return false;
+    }
+     public static void affiche(Game game) {
         String boardaff = "";
-        for (int i = 0; i < lab.getBoard().length; ++i) {
-            for (int j = 0; j < lab.getBoard()[i].length; ++j) {
-
-                if (lab.getBoard()[i][j].contientPacman()) {
-                    boardaff += lab.getBoard()[i][j].getPacman().toString();
-                } else if (lab.getBoard()[i][j].contientAliment()) {
-                    boardaff += lab.getBoard()[i][j].getAlim().toString();
-                } else if (lab.getBoard()[i][j].contientMur()){
-                    boardaff += lab.getBoard()[i][j].getMur().toString();
+        for (int i = 0; i < game.getLongeurBoard(); ++i) {
+            for (int j = 0; j < game.getLargeurBoard(); ++j) {
+                if(verifPos(game.getFantomes(),new Position(i, j))){
+                    boardaff+=" F ";
+                }else if(game.getPacmanPosition().equals(new Position(i, j))){
+                    boardaff+=" P ";
                 }else{
-                    boardaff += lab.getBoard()[i][j].toString();
+                    boardaff+=game.getBoard()[i][j].toString();
                 }
+                
             }
             boardaff += "\n";
         }
@@ -94,7 +102,7 @@ public class Vue implements Observer{
     @Override
     public void update(Observable obs, Object arg) {
        Game game=(Game)obs;
-       affiche(game.getLab());
+       affiche(game);
     }
     
 }

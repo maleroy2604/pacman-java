@@ -1,6 +1,6 @@
 package Model;
 
-public class Champignon implements Aliment {
+public class Champignon extends Aliment {
 
     @Override
     public String toString() {
@@ -8,9 +8,9 @@ public class Champignon implements Aliment {
     }
 
     @Override
-    public boolean estMangerPar(PacMan p) {
+    public void estMangerPar(PacMan p) {
         p.manger(0);
-        return true;
+        
     }
 
     

@@ -1,6 +1,6 @@
 package Model;
 
-public class Pacgomme implements Aliment {
+public class Pacgomme extends Aliment {
 
     @Override
     public String toString() {
@@ -9,10 +9,10 @@ public class Pacgomme implements Aliment {
     }
 
     @Override
-    public boolean estMangerPar(PacMan p) {
+    public void estMangerPar(PacMan p) {
        p.manger(1);
        p.augmenterGomme(1);
-       return true;
+       
     }
 
     

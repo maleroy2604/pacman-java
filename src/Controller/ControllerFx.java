@@ -15,7 +15,7 @@ import javafx.scene.canvas.Canvas;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-
+import Model.Direction;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -27,23 +27,34 @@ public class ControllerFx extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         VueFx vue = new VueFx(stage, game);
+        joueFantome();
         deplacement();
         game.addObserver(vue);
-//        joueFantome(game);
+        
 
     }
-//    private void joueFantome(Game game){
-//         Timeline timeline = new Timeline(new KeyFrame(
-//                Duration.millis(100),
-//                ae -> actionPeriodique(game))
-//        );
-//        timeline.setCycleCount(Animation.INDEFINITE);
-//        timeline.play();                
-//    }
-//    // private void actionPeriodique(Game game) {
-//     //   game.deplacerFantome(Direction.randomDirection());
-//   // }
-    
+
+    private void joueFantome() {
+        Timeline timeline = new Timeline(new KeyFrame(
+                Duration.millis(350),
+                ae -> actionPeriodique())
+        );
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+    }
+
+    private void actionPeriodique() {
+       game.deplacerFantome(Direction.randomDirection(), 0);
+       game.deplacerFantome(Direction.randomDirection(), 1);
+       game.deplacerFantome(Direction.randomDirection(), 2);
+       game.deplacerFantome(Direction.randomDirection(), 3);
+        
+       
+        
+    }
+
+
+
     private void deplacement() {
 
         this.root.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -54,19 +65,17 @@ public class ControllerFx extends Application {
                 }
                 if (event.getCode() == KeyCode.RIGHT) {
                     dirigerEst();
-                   
 
                 }
                 if (event.getCode() == KeyCode.LEFT) {
 
-                    
-                     dirigerOuest();
+                    dirigerOuest();
                 }
                 if (event.getCode() == KeyCode.UP) {
                     dirigerNord();
                 }
                 if (event.getCode() == KeyCode.DOWN) {
-                    
+
                     dirigerSud();
                 }
 

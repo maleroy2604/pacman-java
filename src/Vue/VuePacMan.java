@@ -11,7 +11,7 @@ public class VuePacMan {
     private static final Image superPacMan = new Image("file:images/pacman_invincible.png");
 
     public static void paintOn(GraphicsContext gc, int i, int j, Game game) {
-        if (game.getPerso().getSuperPacMan()) {
+        if (game.getPacman().getSuperPacman()) {
             gc.drawImage(
                     superPacMan,
                     j * 20,
