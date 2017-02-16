@@ -31,7 +31,7 @@ public class Controller {
         Vue.affDirection();
         do {
             Vue.affiche(game);
-//            Vue.affMsg(game.ScoreViesRestante());
+           Vue.affMsg(game.ScoreViesRestante());
             diriger();
         } while (!game.finDePartie());
         Vue.affMsg("fin de partie : nombre de vies epuisées ou tout les fantomes mangés : ");

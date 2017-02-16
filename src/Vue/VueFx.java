@@ -1,9 +1,13 @@
 package Vue;
 
+import Model.Champignon;
+import Model.Fantome;
 import Model.Fruit;
 import Model.Game;
 import Model.PacMan;
 import Model.Pacgomme;
+import Model.Position;
+import java.util.List;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -67,25 +71,31 @@ public class VueFx implements Observer {
         canvas.requestFocus();
 
     }
+     public static boolean  verifPos(List<Fantome> listFant,Position pos){
+        for(Fantome fant :listFant){
+            if (fant.getPosFant().equals(pos))
+                return true;
+        }
+        return false;
+    }
 
     public void choixElem(GraphicsContext gc, Game game) {
-        for (int i = 0; i < game.getLab().getBoard().length; ++i) {
-            for (int j = 0; j < game.getLab().getBoard()[i].length; ++j) {
-                if (game.getLab().getBoard()[i][j].contientMur()) {
+        for (int i = 0; i < game.getBoard().length; ++i) {
+            for (int j = 0; j < game.getBoard()[i].length; ++j) {
+                if (!game.getBoard()[i][j].estAccessible()) {
                     VueMur.paintOn(gc, i, j);
-                 }else if(game.getLab().getBoard()[i][j].contientFantome()){
+                 }else if(verifPos(game.getFantomes(),new Position(i,j))){
                     VueFant.paintOn(gc, i, j, game);
-                } else if (game.getLab().getBoard()[i][j].contientPacman() ) {
+                } else if (game.getPacmanPosition().equals(new Position(i,j))) {
                    VuePacMan.paintOn(gc, i, j,game);
-                } else if (game.getLab().getBoard()[i][j].contientAliment()) {
-                    if((game.getLab().getBoard()[i][j].getAlim()instanceof Fruit)){
+                } else if (game.getBoard()[i][j]instanceof Fruit) {
                         VueFruit.paintOn(gc, i, j);
-                    }else if(game.getLab().getBoard()[i][j].getAlim()instanceof Pacgomme){
+                    }else if(game.getBoard()[i][j]instanceof Pacgomme){
                         VuePacGom.paintOn(gc, i, j);
-                    }else{
+                    }else if(game.getBoard()[i][j]instanceof Champignon){
                         VueChampi.paintOn(gc, i, j);
                     }
-                } else if (game.getLab().getBoard()[i][j].isEmpty()) {
+                 else {
                     VueVide.paintOn(gc, i, j);
                
                 }

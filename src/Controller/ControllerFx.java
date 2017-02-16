@@ -1,7 +1,6 @@
 package Controller;
 
 import Model.Game;
-import Model.Position;
 import Vue.VueFx;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -15,7 +14,6 @@ import javafx.scene.canvas.Canvas;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import Model.Direction;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -30,7 +28,6 @@ public class ControllerFx extends Application {
         joueFantome();
         deplacement();
         game.addObserver(vue);
-        
 
     }
 
@@ -44,16 +41,8 @@ public class ControllerFx extends Application {
     }
 
     private void actionPeriodique() {
-       game.deplacerFantome(Direction.randomDirection(), 0);
-       game.deplacerFantome(Direction.randomDirection(), 1);
-       game.deplacerFantome(Direction.randomDirection(), 2);
-       game.deplacerFantome(Direction.randomDirection(), 3);
-        
-       
-        
+
     }
-
-
 
     private void deplacement() {
 
@@ -64,44 +53,26 @@ public class ControllerFx extends Application {
                     Platform.exit();
                 }
                 if (event.getCode() == KeyCode.RIGHT) {
-                    dirigerEst();
+                    game.setDirectionPacman(Direction.EST);
+                    game.deplacerPacman();
 
                 }
                 if (event.getCode() == KeyCode.LEFT) {
-
-                    dirigerOuest();
+                    game.setDirectionPacman(Direction.OUEST);
+                    game.deplacerPacman();
                 }
                 if (event.getCode() == KeyCode.UP) {
-                    dirigerNord();
+                    game.setDirectionPacman(Direction.NORD);
+                    game.deplacerPacman();
                 }
                 if (event.getCode() == KeyCode.DOWN) {
 
-                    dirigerSud();
+                    game.setDirectionPacman(Direction.SUD);
+                    game.deplacerPacman();
                 }
 
             }
         });
-    }
-
-    private void dirigerNord() {
-        Position posH = new Position(game.getLab().getPosCourante().getX() - 1, game.getLab().getPosCourante().getY());
-        game.deplacer(posH);
-    }
-
-    private void dirigerSud() {
-        Position posB = new Position((game.getLab().getPosCourante().getX()) + 1, game.getLab().getPosCourante().getY());
-        game.deplacer(posB);
-
-    }
-
-    public void dirigerEst() {
-        Position posD = new Position(game.getLab().getPosCourante().getX(), (game.getLab().getPosCourante().getY()) + 1);
-        game.deplacer(posD);
-    }
-
-    public void dirigerOuest() {
-        Position posG = new Position(game.getLab().getPosCourante().getX(), (game.getLab().getPosCourante().getY()) - 1);
-        game.deplacer(posG);
     }
 
     public static void main(String[] args) {

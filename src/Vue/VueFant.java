@@ -13,7 +13,7 @@ public class VueFant  {
       private static final int TAILLE = 20;
      
      public static void paintOn(GraphicsContext gc,int i,int j,Game game ){
-         if(game.getPacman().getSuperPacman()){
+         if(game.getPacman().estSuperPacman()){
              gc.drawImage(
                        vide,
                         j * 20,

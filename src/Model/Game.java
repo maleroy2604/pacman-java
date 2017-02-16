@@ -12,8 +12,7 @@ public class Game extends Observable {
     private final int NBR_FANTOME = 4;
     private List<Position> listPosFant = new LinkedList<>();
     private Case[][] board = new Case[TAB.length][TAB[0].length];
-    
-    public List<Fantome> listFant = new LinkedList<>();
+    private List<Fantome> listFant = new LinkedList<>();
     private static final int[][] TAB = {
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
         {1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1},
@@ -102,6 +101,8 @@ public class Game extends Observable {
     }
     public void deplacerPacman(){
         pacman.choixDeplacement(board, listFant);
+        setChangeAndNotify(this);
+        
     }   
    public int  getLongeurBoard(){
        return board.length;
@@ -123,5 +124,9 @@ public class Game extends Observable {
     }
     public void setDirectionPacman( Direction d){
         pacman.setDirectionPacman(d);
+    }
+    public String ScoreViesRestante(){
+    
+        return "Vies restante : "+pacman.nbrViesRestante()+" Score : "+pacman.score();
     }
 }
