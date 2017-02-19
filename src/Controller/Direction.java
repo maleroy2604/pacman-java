@@ -15,15 +15,13 @@ public enum Direction {
     Direction(String msg) {
         this.msg = msg;
     }
+    
 
      @Override
     public String toString() {
         return msg;
     }
-    
-     public static Direction randomDirection() {
-        return Direction.values()[rand.nextInt(Direction.values().length)];
-    }
+   
     public static Direction getByInt(int choix) throws IndexOutOfBoundsException {
         if (choix < 0 || choix > Direction.values().length) {
             throw new IndexOutOfBoundsException();

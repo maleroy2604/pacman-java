@@ -3,12 +3,14 @@ package Model;
 import java.util.List;
 import Controller.Direction;
 
-public class PacMan extends Personnage {
+public class PacMan {
 
-    Position posPacman, posInit;
-
+    private Position posPacman, posInit;
+    private Direction direction;
     private boolean superPacMan = false;
     private int nbrFant = 4, bonus = 0, nbrVies = 2, nbrGomme = 0;
+    private static final int NBR_GOM_TOT = 226;
+    private static final Case CASE_VIDE = new CaseVide();
 
     @Override
     public String toString() {
@@ -24,16 +26,12 @@ public class PacMan extends Personnage {
         return posPacman;
     }
 
+    public Position getPosInit() {
+        return posInit;
+    }
+
     public void setPosition(Position pos) {
         this.posPacman = pos;
-    }
-
-    public void manger(int a) {
-        bonus += a;
-    }
-
-    public void augmenterGomme(int valeur) {
-        nbrGomme += valeur;
     }
 
     public void setSuperPacman(boolean val) {
@@ -62,7 +60,7 @@ public class PacMan extends Personnage {
 
     }
 
-    public int fantomeExist(Position pos, List<Fantome> listFant) {
+    private int fantomeExist(Position pos, List<Fantome> listFant) {
         for (int i = 0; i < listFant.size(); ++i) {
             if (listFant.get(i).getPosFant().equals(pos)) {
                 return i;
@@ -72,30 +70,30 @@ public class PacMan extends Personnage {
     }
 
     private void deplacerVersFant(Position pos, List<Fantome> listFant) {
-            if (superPacMan) {
-                mangerFant();
-                listFant.remove(fantomeExist(pos, listFant));
-                posPacman = pos;
-            } else {
-                initCase();
-                --nbrVies;
-            }
+        if (superPacMan) {
+            mangerFant();
+            Fantome f = listFant.get(fantomeExist(pos, listFant));
+            f.setPosition(f.getPosInit());
+            posPacman = pos;
+        } else {
+            initCase();
+            --nbrVies;
+        }
     }
 
-    public void deplacer(Position pos, List<Fantome> listFant, Case[][] board) {
-        Case caseVide = new CaseVide();
+    private void deplacer(Position pos, List<Fantome> listFant, Case[][] board) {
+
         if (board[pos.getX()][pos.getY()].estAccessible()) {
             if (fantomeExist(pos, listFant) < listFant.size()) {
+                board[pos.getX()][pos.getY()].estMangerPar(this);
+                board[posPacman.getX()][posPacman.getY()] = CASE_VIDE;
                 deplacerVersFant(pos, listFant);
-                if (posPacman.equals(pos)) {
-                    board[pos.getX()][pos.getY()].estMangerPar(this);
-                    board[posPacman.getX()][posPacman.getY()] = caseVide;
-                }
             } else {
                 board[pos.getX()][pos.getY()].estMangerPar(this);
-                board[posPacman.getX()][posPacman.getY()] = caseVide;
+                board[posPacman.getX()][posPacman.getY()] = CASE_VIDE;
                 posPacman = pos;
             }
+
         }
     }
 
@@ -103,13 +101,13 @@ public class PacMan extends Personnage {
         return superPacMan;
     }
 
-    public void mangerFant() {
+    private void mangerFant() {
         bonus += 20;
-        --nbrFant;
+//        --nbrFant;
 
     }
 
-    public void initCase() {
+    private void initCase() {
         posPacman = posInit;
     }
 
@@ -121,8 +119,24 @@ public class PacMan extends Personnage {
         return nbrFant;
     }
 
+    public void setNbrVies(int i) {
+        this.nbrVies -= i;
+    }
+
     public int nbrViesRestante() {
         return nbrVies;
+    }
+
+    public int nbrGommeRestant() {
+        return NBR_GOM_TOT- nbrGomme;
+    }
+
+    public void manger(int a) {
+        bonus += a;
+    }
+
+    public void augmenterGomme(int valeur) {
+        nbrGomme += valeur;
     }
 
     public int score() {

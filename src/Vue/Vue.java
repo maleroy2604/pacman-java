@@ -18,7 +18,7 @@ public class Vue implements Observer{
     }
     private Vue(){}
 
-    public static boolean  verifPos(List<Fantome> listFant,Position pos){
+    private static boolean  verifPos(List<Fantome> listFant,Position pos){
         for(Fantome fant :listFant){
             if (fant.getPosFant().equals(pos))
                 return true;

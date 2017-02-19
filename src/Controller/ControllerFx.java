@@ -32,8 +32,9 @@ public class ControllerFx extends Application {
     }
 
     private void joueFantome() {
+
         Timeline timeline = new Timeline(new KeyFrame(
-                Duration.millis(350),
+                Duration.millis(200),
                 ae -> actionPeriodique())
         );
         timeline.setCycleCount(Animation.INDEFINITE);
@@ -41,7 +42,10 @@ public class ControllerFx extends Application {
     }
 
     private void actionPeriodique() {
-
+        if (game.finDePartie()) {
+            Platform.exit();
+        }
+        game.deplacerFantome();
     }
 
     private void deplacement() {

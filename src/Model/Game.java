@@ -96,37 +96,58 @@ public class Game extends Observable {
         setChanged();
         notifyObservers(obj);
     }
+
     public boolean finDePartie() {
-        return pacman.nbrFantManger() == 0 || pacman.nbrViesRestante() <= 0;
+        return pacman.nbrFantManger() == 0 || pacman.nbrViesRestante() <= 0 || pacman.nbrGommeRestant() == 0;
     }
-    public void deplacerPacman(){
+
+    public void deplacerPacman() {
         pacman.choixDeplacement(board, listFant);
         setChangeAndNotify(this);
-        
-    }   
-   public int  getLongeurBoard(){
-       return board.length;
-   }
-    public int getLargeurBoard(){
+
+    }
+
+    public void deplacerFantome() {
+
+        for (Fantome f : listFant) {
+            f.choixDeplacement(board, pacman);
+            setChangeAndNotify(this);
+
+        }
+    }
+
+    public int getLongeurBoard() {
+        return board.length;
+    }
+
+    public int getLargeurBoard() {
         return board[0].length;
     }
-   public List<Fantome> getFantomes(){
-       return listFant;
-   }
-    public Position getPacmanPosition(){
+
+    public List<Fantome> getFantomes() {
+        return listFant;
+    }
+
+    public Position getPacmanPosition() {
         return pacman.getPosition();
     }
-    public Case[][] getBoard(){
+
+    public Case[][] getBoard() {
         return board;
     }
-    public PacMan getPacman(){
+
+    public PacMan getPacman() {
         return pacman;
     }
-    public void setDirectionPacman( Direction d){
+
+    public void setDirectionPacman(Direction d) {
         pacman.setDirectionPacman(d);
     }
-    public String ScoreViesRestante(){
-    
-        return "Vies restante : "+pacman.nbrViesRestante()+" Score : "+pacman.score();
+
+    public String ScoreViesRestante() {
+
+        return "Vies restante : " + pacman.nbrViesRestante()
+                + " Score : " + pacman.score() + " " + " nombre Gommes Restants: "
+                + pacman.nbrGommeRestant() + " nombre Total : " + 226;
     }
 }

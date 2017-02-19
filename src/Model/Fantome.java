@@ -1,52 +1,86 @@
 package Model;
 
-public class Fantome extends Personnage {
+import java.util.LinkedList;
+import java.util.List;
 
-    Position posFant, posInit;
-    Direction direction;
+public class Fantome {
+
+    private Position posFant, posInit, posPrec;
+    private static final List<Position> POS_COIN = new LinkedList<>();
+    private Direction direction;
 
     public Fantome(Position p) {
         posFant = p;
         posInit = p;
         this.direction = Direction.randomDirection();
+        POS_COIN.add(new Position(11, 1));
+        POS_COIN.add(new Position(11, 21));
     }
 
-    @Override
-    public String toString() {
-        return " F ";
+    private Position posCoin(Position p) {
+        for (Position pos : POS_COIN) {
+            if (p.equals(pos)) {
+                return pos;
+            }
+        }
+        return null;
+    }
+
+    private void fantomeBolque() {
+        Position p = posCoin(posFant);
+        posFant = posPrec;
+        posPrec = p;
+
     }
 
     public void choixDeplacement(Case[][] board, PacMan pacman) {
         switch (direction) {
             case NORD:
                 Position posH = new Position(posFant.getX() - 1, posFant.getY());
-                deplacer(posH, pacman,board);
+                deplacer(posH, pacman, board);
                 break;
             case SUD:
                 Position posB = new Position(posFant.getX() + 1, posFant.getY());
                 deplacer(posB, pacman, board);
                 break;
             case OUEST:
-                Position posD = new Position(posFant.getX(), posFant.getY() + 1);
+                Position posD = new Position(posFant.getX(), posFant.getY() - 1);
                 deplacer(posD, pacman, board);
                 break;
             case EST:
-                Position posG = new Position(posFant.getX(), posFant.getY() - 1);
+                Position posG = new Position(posFant.getX(), posFant.getY() + 1);
                 deplacer(posG, pacman, board);
                 break;
         }
 
     }
-    public void deplacer(Position pos ,PacMan pacman,Case [][] board){
-        while(board[pos.getX()][pos.getY()].estAccessible() ){
-            posFant=pos;
-            
-             choixDeplacement(board, pacman);
-             
+
+    private void deplacerVersPacman(Position pos, PacMan pacman) {
+        if (pacman.estSuperPacman()) {
+            initialise();
+        } else {
+            posPrec = posFant;
+            posFant = pos;
+            pacman.setPosition(pacman.getPosInit());
+            pacman.setNbrVies(1);
+
         }
-        this.direction=Direction.randomDirection();
-        choixDeplacement(board, pacman);
-               
+    }
+
+    private void deplacer(Position pos, PacMan pacman, Case[][] board) {
+        if (board[pos.getX()][pos.getY()].estAccessible()) {
+            if (!pos.equals(posPrec)) {
+                if (pos.equals(pacman.getPosition())) {
+                    deplacerVersPacman(pos, pacman);
+                } else {
+                    deplacerVersPos(pos);
+                }
+
+            } else if (POS_COIN.contains(posFant)) {
+                fantomeBolque();
+            } 
+        }
+        this.direction = Direction.randomDirection();
     }
 
     public void setPosition(Position pos) {
@@ -57,8 +91,22 @@ public class Fantome extends Personnage {
         return posFant;
     }
 
-    public void initCase() {
+    public Position getPosInit() {
+        return this.posInit;
+    }
+
+    private void deplacerVersPos(Position pos) {
+        posPrec = posFant;
+        posFant = pos;
+    }
+
+    private void initialise() {
         posFant = posInit;
+    }
+
+    @Override
+    public String toString() {
+        return " F ";
     }
 
 }
