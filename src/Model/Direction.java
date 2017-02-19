@@ -21,6 +21,19 @@ public enum Direction {
         return msg;
     }
 
+    public static Direction directionOposee(Direction d) {
+        if (d == NORD) {
+            return SUD;
+        } else if (d == SUD) {
+            return NORD;
+        } else if (d == EST) {
+            return OUEST;
+        } else if (d == OUEST) {
+            return EST;
+        }
+        return null;
+    }
+
     public static Direction randomDirection() {
         return Direction.values()[rand.nextInt(Direction.values().length)];
     }

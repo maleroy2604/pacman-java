@@ -34,7 +34,7 @@ public class ControllerFx extends Application {
     private void joueFantome() {
 
         Timeline timeline = new Timeline(new KeyFrame(
-                Duration.millis(200),
+                Duration.millis(350),
                 ae -> actionPeriodique())
         );
         timeline.setCycleCount(Animation.INDEFINITE);

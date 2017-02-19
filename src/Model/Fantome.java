@@ -5,9 +5,10 @@ import java.util.List;
 
 public class Fantome {
 
-    private Position posFant, posInit, posPrec;
+    private Position posFant, posInit;
     private static final List<Position> POS_COIN = new LinkedList<>();
-    private Direction direction;
+    private Direction direction, prec;
+    
 
     public Fantome(Position p) {
         posFant = p;
@@ -17,70 +18,65 @@ public class Fantome {
         POS_COIN.add(new Position(11, 21));
     }
 
-    private Position posCoin(Position p) {
-        for (Position pos : POS_COIN) {
-            if (p.equals(pos)) {
-                return pos;
-            }
-        }
-        return null;
-    }
-
-    private void fantomeBolque() {
-        Position p = posCoin(posFant);
-        posFant = posPrec;
-        posPrec = p;
-
-    }
-
     public void choixDeplacement(Case[][] board, PacMan pacman) {
-        switch (direction) {
-            case NORD:
-                Position posH = new Position(posFant.getX() - 1, posFant.getY());
-                deplacer(posH, pacman, board);
-                break;
-            case SUD:
-                Position posB = new Position(posFant.getX() + 1, posFant.getY());
-                deplacer(posB, pacman, board);
-                break;
-            case OUEST:
-                Position posD = new Position(posFant.getX(), posFant.getY() - 1);
-                deplacer(posD, pacman, board);
-                break;
-            case EST:
-                Position posG = new Position(posFant.getX(), posFant.getY() + 1);
-                deplacer(posG, pacman, board);
-                break;
-        }
-
+        this.direction = changeDirection(board);
+        Position pos=posDeDirection(direction);
+        deplacer(pos,pacman);
     }
 
     private void deplacerVersPacman(Position pos, PacMan pacman) {
         if (pacman.estSuperPacman()) {
             initialise();
         } else {
-            posPrec = posFant;
             posFant = pos;
             pacman.setPosition(pacman.getPosInit());
             pacman.setNbrVies(1);
-
         }
     }
 
-    private void deplacer(Position pos, PacMan pacman, Case[][] board) {
-        if (board[pos.getX()][pos.getY()].estAccessible()) {
-            if (!pos.equals(posPrec)) {
-                if (pos.equals(pacman.getPosition())) {
-                    deplacerVersPacman(pos, pacman);
-                } else {
-                    deplacerVersPos(pos);
-                }
-
-            } else if (POS_COIN.contains(posFant)) {
-                fantomeBolque();
-            } 
+    private void deplacer(Position pos, PacMan pacman) {
+        
+        if (pos.equals(pacman.getPosition())) {
+            deplacerVersPacman(pos, pacman);
+        } else {
+            posFant=pos;
         }
+        prec = direction;
+
+    }
+
+    private Direction changeDirection(Case[][] board) {
         this.direction = Direction.randomDirection();
+        Position p = posDeDirection(direction);
+        while (direction == Direction.directionOposee(prec) || !board[p.getX()][p.getY()].estAccessible()) {
+            this.direction = Direction.randomDirection();
+            p = posDeDirection(direction);
+            if (POS_COIN.contains(posFant)) {
+                return direction = Direction.directionOposee(prec);
+            }
+        }
+        return direction;
+    }
+
+    public Position posDeDirection(Direction d) {
+        if (d == Direction.NORD) {
+            Position posH = new Position(posFant.getX() - 1, posFant.getY());
+            return posH;
+        }
+        if (d == Direction.SUD) {
+            Position posH = new Position(posFant.getX() + 1, posFant.getY());
+            return posH;
+        }
+        if (d == Direction.EST) {
+            Position posH = new Position(posFant.getX(), posFant.getY() + 1);
+            return posH;
+        }
+        if (d == Direction.OUEST) {
+            Position posH = new Position(posFant.getX(), posFant.getY() - 1);
+            return posH;
+        }
+        return null;
+
     }
 
     public void setPosition(Position pos) {
@@ -93,11 +89,6 @@ public class Fantome {
 
     public Position getPosInit() {
         return this.posInit;
-    }
-
-    private void deplacerVersPos(Position pos) {
-        posPrec = posFant;
-        posFant = pos;
     }
 
     private void initialise() {
