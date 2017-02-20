@@ -1,6 +1,7 @@
 package Vue;
 
 import Controller.Direction;
+import Model.CompFant;
 import Model.Fantome;
 
 import Model.Game;
@@ -18,8 +19,8 @@ public class Vue implements Observer{
     }
     private Vue(){}
 
-    private static boolean  verifPos(List<Fantome> listFant,Position pos){
-        for(Fantome fant :listFant){
+    private static boolean  verifPos(List<CompFant> listFant,Position pos){
+        for(CompFant fant :listFant){
             if (fant.getPosFant().equals(pos))
                 return true;
         }

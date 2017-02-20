@@ -1,32 +1,32 @@
 package Model;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Fantome extends CompFant {
-    
-    public Fantome(Position p) {
-        super(p);
-        this.direction = Direction.randomDirection();
-        POS_COIN.add(new Position(11, 1));
-        POS_COIN.add(new Position(11, 21));
+public class SuperFant extends CompFant {
+
+    List<CompFant> composants = new ArrayList<>();
+
+    public SuperFant(Position pos) {
+        super(pos);
+
     }
-    
+
+    public void addCompFant(CompFant compFant) {
+        composants.add(compFant);
+    }
+
     @Override
     public void deplacerVersPacman(Position pos, PacMan pacman) {
         if (pacman.estSuperPacman()) {
-            initialise();
+            super.initialise();
         } else {
             posFant = pos;
             pacman.setPosition(pacman.getPosInit());
-            pacman.setNbrVies(1);
+            pacman.setNbrVies(composants.size());
         }
     }
-    
-    public String toString() {
-        return " F ";
-    }
-    
+
     @Override
     public void deplacerVersFant(Position pos, List<CompFant> listCompFant) {
         for (CompFant f : listCompFant) {
@@ -38,9 +38,5 @@ public class Fantome extends CompFant {
         }
     }
     
-    @Override
-    public void addCompFant(CompFant compFant) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+
 }

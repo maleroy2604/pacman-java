@@ -12,7 +12,7 @@ public class Game extends Observable {
     private final int NBR_FANTOME = 4;
     private List<Position> listPosFant = new LinkedList<>();
     private Case[][] board = new Case[TAB.length][TAB[0].length];
-    private List<Fantome> listFant = new LinkedList<>();
+    private List<CompFant> listFant = new LinkedList<>();
     private static final int[][] TAB = {
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
         {1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1},
@@ -109,8 +109,8 @@ public class Game extends Observable {
 
     public void deplacerFantome() {
 
-        for (Fantome f : listFant) {
-            f.choixDeplacement(board, pacman);
+        for (CompFant f : listFant) {
+            f.choixDeplacement(board, pacman,listFant);
             setChangeAndNotify(this);
 
         }
@@ -124,7 +124,7 @@ public class Game extends Observable {
         return board[0].length;
     }
 
-    public List<Fantome> getFantomes() {
+    public List<CompFant> getFantomes() {
         return listFant;
     }
 

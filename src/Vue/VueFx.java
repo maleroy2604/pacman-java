@@ -1,6 +1,7 @@
 package Vue;
 
 import Model.Champignon;
+import Model.CompFant;
 import Model.Fantome;
 import Model.Fruit;
 import Model.Game;
@@ -71,8 +72,8 @@ public class VueFx implements Observer {
         canvas.requestFocus();
 
     }
-     public static boolean  verifPos(List<Fantome> listFant,Position pos){
-        for(Fantome fant :listFant){
+     public static boolean  verifPos(List<CompFant> listFant,Position pos){
+        for(CompFant fant :listFant){
             if (fant.getPosFant().equals(pos))
                 return true;
         }

@@ -38,7 +38,7 @@ public class PacMan {
         superPacMan = val;
     }
 
-    public void choixDeplacement(Case[][] board, List<Fantome> listFant) {
+    public void choixDeplacement(Case[][] board, List<CompFant> listFant) {
         switch (direction) {
             case NORD:
                 Position posN = new Position(posPacman.getX() - 1, posPacman.getY());
@@ -60,7 +60,7 @@ public class PacMan {
 
     }
 
-    private int fantomeExist(Position pos, List<Fantome> listFant) {
+    private int fantomeExist(Position pos, List<CompFant> listFant) {
         for (int i = 0; i < listFant.size(); ++i) {
             if (listFant.get(i).getPosFant().equals(pos)) {
                 return i;
@@ -69,10 +69,10 @@ public class PacMan {
         return listFant.size();
     }
 
-    private void deplacerVersFant(Position pos, List<Fantome> listFant) {
+    private void deplacerVersFant(Position pos, List<CompFant> listFant) {
         if (superPacMan) {
             mangerFant();
-            Fantome f = listFant.get(fantomeExist(pos, listFant));
+            CompFant f = listFant.get(fantomeExist(pos, listFant));
             f.setPosition(f.getPosInit());
             posPacman = pos;
         } else {
@@ -81,7 +81,7 @@ public class PacMan {
         }
     }
 
-    private void deplacer(Position pos, List<Fantome> listFant, Case[][] board) {
+    private void deplacer(Position pos, List<CompFant> listFant, Case[][] board) {
 
         if (board[pos.getX()][pos.getY()].estAccessible()) {
             if (fantomeExist(pos, listFant) < listFant.size()) {
