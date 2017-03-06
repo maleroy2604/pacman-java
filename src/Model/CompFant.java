@@ -2,6 +2,9 @@ package Model;
 
 import java.util.LinkedList;
 import java.util.List;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 public abstract class CompFant {
      protected Position posFant, posInit;
@@ -19,21 +22,41 @@ public abstract class CompFant {
         Position pos = posDeDirection(direction);
         deplacer(pos, pacman,listCompFant);
     }
+    public abstract void decomposer(List<CompFant> listCompFant);
     public abstract void addCompFant(CompFant compFant);
     public abstract void deplacerVersPacman(Position pos, PacMan pacman) ;
-    public abstract void deplacerVersFant(Position pos,List <CompFant> listCompFant);
+    public  void deplacerVersFant(Position pos,List <CompFant> listCompFant){
+       
+        CompFant f = fantomeExist(pos, listCompFant);
+        SuperFant sf = new SuperFant(pos, f, this);
+        sf.direction=f.direction;
+        listCompFant.remove(f);
+        listCompFant.remove(this);
+        listCompFant.add(sf);
+        
+     
+    
+    }
 
     public void deplacer(Position pos, PacMan pacman,List <CompFant> listCompFant) {
 
         if (pos.equals(pacman.getPosition())) {
             deplacerVersPacman(pos, pacman);
-        } else if(listCompFant.contains(pos)) {
-            
+        } else if(fantomeExist(pos, listCompFant)!=null) {
+            deplacerVersFant(pos, listCompFant);
         }else{
             posFant = pos;
         }
         prec = direction;
 
+    }
+     protected CompFant fantomeExist(Position pos, List<CompFant> listFant) {
+        for (int i = 0; i < listFant.size(); ++i) {
+            if (listFant.get(i).getPosFant().equals(pos)) {
+                return listFant.get(i);
+            }
+        }
+        return null;
     }
 
     public Direction changeDirection(Case[][] board) {

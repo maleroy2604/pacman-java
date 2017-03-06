@@ -30,23 +30,38 @@ public class ControllerFx extends Application {
         game.addObserver(vue);
 
     }
+    private void decomposer(Game game){
+         Timeline timeline = new Timeline(new KeyFrame(
+                Duration.millis(5000),
+                ae -> game.decomposer())
+        );
+         timeline.play();
+    }
 
     private void joueFantome() {
-
+        
         Timeline timeline = new Timeline(new KeyFrame(
-                Duration.millis(350),
+                Duration.millis(300),
                 ae -> actionPeriodique())
+                
         );
+         
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
+       
+         
     }
 
     private void actionPeriodique() {
         if (game.finDePartie()) {
             Platform.exit();
         }
+        decomposer(game);
         game.deplacerFantome();
+        
+        
     }
+  
 
     private void deplacement() {
 

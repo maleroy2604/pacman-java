@@ -8,7 +8,7 @@ public class PacMan {
     private Position posPacman, posInit;
     private Direction direction;
     private boolean superPacMan = false;
-    private int nbrFant = 4, bonus = 0, nbrVies = 2, nbrGomme = 0;
+    private int nbrFant = 4, bonus = 0, nbrVies = 5, nbrGomme = 0;
     private static final int NBR_GOM_TOT = 226;
     private static final Case CASE_VIDE = new CaseVide();
 
@@ -60,19 +60,19 @@ public class PacMan {
 
     }
 
-    private int fantomeExist(Position pos, List<CompFant> listFant) {
+    private CompFant fantomeExist(Position pos, List<CompFant> listFant) {
         for (int i = 0; i < listFant.size(); ++i) {
             if (listFant.get(i).getPosFant().equals(pos)) {
-                return i;
+                return listFant.get(i);
             }
         }
-        return listFant.size();
+        return null;
     }
 
     private void deplacerVersFant(Position pos, List<CompFant> listFant) {
         if (superPacMan) {
             mangerFant();
-            CompFant f = listFant.get(fantomeExist(pos, listFant));
+            CompFant f = (fantomeExist(pos, listFant));
             f.setPosition(f.getPosInit());
             posPacman = pos;
         } else {
@@ -84,7 +84,7 @@ public class PacMan {
     private void deplacer(Position pos, List<CompFant> listFant, Case[][] board) {
 
         if (board[pos.getX()][pos.getY()].estAccessible()) {
-            if (fantomeExist(pos, listFant) < listFant.size()) {
+            if (fantomeExist(pos, listFant)!= null) {
                 board[pos.getX()][pos.getY()].estMangerPar(this);
                 board[posPacman.getX()][posPacman.getY()] = CASE_VIDE;
                 deplacerVersFant(pos, listFant);

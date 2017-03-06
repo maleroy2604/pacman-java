@@ -109,11 +109,12 @@ public class Game extends Observable {
 
     public void deplacerFantome() {
 
-        for (CompFant f : listFant) {
-            f.choixDeplacement(board, pacman,listFant);
+        for (int i=0 ;i<listFant.size();++i) {
+            listFant.get(i).choixDeplacement(board, pacman,listFant);
             setChangeAndNotify(this);
 
         }
+      
     }
 
     public int getLongeurBoard() {
@@ -149,5 +150,19 @@ public class Game extends Observable {
         return "Vies restante : " + pacman.nbrViesRestante()
                 + " Score : " + pacman.score() + " " + " nombre Gommes Restants: "
                 + pacman.nbrGommeRestant() + " nombre Total : " + 226;
+    }
+    public CompFant getFantome(Position pos) {
+        for (int i = 0; i < listFant.size(); ++i) {
+            if (listFant.get(i).getPosFant().equals(pos)) {
+                return listFant.get(i);
+            }
+        }
+        return null;
+    }
+    public void decomposer(){
+        for(int i=0; i<listFant.size(); ++i){
+            
+            listFant.get(i).decomposer(listFant);
+        }
     }
 }

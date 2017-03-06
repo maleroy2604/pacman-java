@@ -3,12 +3,15 @@ package Model;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class SuperFant extends CompFant {
 
-    List<CompFant> composants = new ArrayList<>();
+    private List<CompFant> composants = new ArrayList<>();
 
-    public SuperFant(Position pos) {
+    public SuperFant(Position pos, CompFant f1, CompFant f2) {
         super(pos);
+        addCompFant(f1);
+        addCompFant(f2);
 
     }
 
@@ -27,16 +30,23 @@ public class SuperFant extends CompFant {
         }
     }
 
-    @Override
-    public void deplacerVersFant(Position pos, List<CompFant> listCompFant) {
-        for (CompFant f : listCompFant) {
-            if (pos.equals(f.getPosFant())) {
-                SuperFant Sf = new SuperFant(pos);
-                Sf.addCompFant(f);
-                Sf.addCompFant(this);
-            }
-        }
+    public String toString(){
+        return "SF";
     }
+
+    public void decomposer(List<CompFant> listCompFant) {
+       CompFant f1=composants.get(0),f2=composants.get(1);
+        System.out.println(listCompFant);
+        composants.removeAll(composants);
+        listCompFant.add(f1);
+        listCompFant.add(f2);
+        listCompFant.remove(this);
+        f1.direction=Direction.directionOposee(f2.direction);
+        
+     
+        System.out.println(listCompFant);
+    }
+    
     
 
 }
