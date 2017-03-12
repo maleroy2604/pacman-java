@@ -162,7 +162,7 @@ public class Game extends Observable {
     public void decomposer(){
         for(int i=0; i<listFant.size(); ++i){
             
-            listFant.get(i).decomposer(listFant);
+            listFant.get(i).decomposer(listFant,board);
         }
     }
 }

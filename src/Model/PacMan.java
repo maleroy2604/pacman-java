@@ -8,7 +8,7 @@ public class PacMan {
     private Position posPacman, posInit;
     private Direction direction;
     private boolean superPacMan = false;
-    private int nbrFant = 4, bonus = 0, nbrVies = 5, nbrGomme = 0;
+    private int nbrFant = 4, bonus = 0, nbrVies = 15, nbrGomme = 0;
     private static final int NBR_GOM_TOT = 226;
     private static final Case CASE_VIDE = new CaseVide();
 
@@ -70,14 +70,14 @@ public class PacMan {
     }
 
     private void deplacerVersFant(Position pos, List<CompFant> listFant) {
+        CompFant f = (fantomeExist(pos, listFant));
         if (superPacMan) {
             mangerFant();
-            CompFant f = (fantomeExist(pos, listFant));
             f.setPosition(f.getPosInit());
             posPacman = pos;
         } else {
             initCase();
-            --nbrVies;
+            nbrVies -=f.nbrViesReset(listFant);
         }
     }
 

@@ -21,34 +21,40 @@ public class ControllerFx extends Application {
 
     private static final Game game = new Game();
     private final Canvas root = VueFx.getCanvas();
-
+     
     @Override
     public void start(Stage stage) throws Exception {
         VueFx vue = new VueFx(stage, game);
+       
+       
+      
         joueFantome();
+      
         deplacement();
         game.addObserver(vue);
 
     }
     private void decomposer(Game game){
+       
          Timeline timeline = new Timeline(new KeyFrame(
                 Duration.millis(5000),
                 ae -> game.decomposer())
         );
+         timeline.setCycleCount(Animation.INDEFINITE);
          timeline.play();
     }
 
     private void joueFantome() {
-        
+       
         Timeline timeline = new Timeline(new KeyFrame(
-                Duration.millis(300),
+                Duration.millis(350),
                 ae -> actionPeriodique())
-                
         );
-         
+        decomposer(game);
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
-       
+        
+      
          
     }
 
@@ -56,8 +62,9 @@ public class ControllerFx extends Application {
         if (game.finDePartie()) {
             Platform.exit();
         }
-        decomposer(game);
+          
         game.deplacerFantome();
+        
         
         
     }

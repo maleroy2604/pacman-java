@@ -1,56 +1,71 @@
 package Model;
-
 import java.util.LinkedList;
 import java.util.List;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.util.Duration;
 
 public abstract class CompFant {
-     protected Position posFant, posInit;
-    protected static final List<Position> POS_COIN = new LinkedList<>();
-    
-    protected Direction direction, prec;
-    public CompFant(Position pos ){
-        posFant=pos;
-        posInit=pos;
-    }
-    
 
-    public void choixDeplacement(Case[][] board, PacMan pacman,List <CompFant> listCompFant) {
-        this.direction = changeDirection(board);
-        Position pos = posDeDirection(direction);
-        deplacer(pos, pacman,listCompFant);
+    protected Position posFant, posInit;
+    protected static final List<Position> POS_COIN = new LinkedList<>();
+    protected Direction direction, prec;
+    protected static boolean desso = false;
+    protected int cptFantFusion=0;
+
+    public CompFant(Position pos) {
+        posFant = pos;
+        posInit = pos;
+        direction = Direction.randomDirection();
     }
-    public abstract void decomposer(List<CompFant> listCompFant);
+
+    public void setDirection(Direction d) {
+        this.direction = d;
+    }
+
+    public Direction getDirection() {
+
+        return direction;
+    }
+
+    public void choixDeplacement(Case[][] board, PacMan pacman, List<CompFant> listCompFant) {
+        Position pos = posDeDirection(direction);
+        while(direction==Direction.directionOposee(prec) || !board[pos.getX()][pos.getY()].estAccessible()) {
+            this.direction = Direction.randomDirection();
+            pos = posDeDirection(direction);
+        }
+        deplacer(pos, pacman, listCompFant);
+    }
+     public int getNbrFantList(){
+         return cptFantFusion;
+     }
+    public abstract void decomposer(List<CompFant> listCompFant, Case[][] board);
+    public abstract int nbrViesReset(List<CompFant> listCompFant);
+
     public abstract void addCompFant(CompFant compFant);
-    public abstract void deplacerVersPacman(Position pos, PacMan pacman) ;
-    public  void deplacerVersFant(Position pos,List <CompFant> listCompFant){
-       
+
+    public abstract void deplacerVersPacman(Position pos, PacMan pacman,List<CompFant> listCompFant);
+
+    public void deplacerVersFant(Position pos, List<CompFant> listCompFant) {
         CompFant f = fantomeExist(pos, listCompFant);
         SuperFant sf = new SuperFant(pos, f, this);
-        sf.direction=f.direction;
         listCompFant.remove(f);
         listCompFant.remove(this);
         listCompFant.add(sf);
-        
-     
-    
+        ++cptFantFusion;
     }
 
-    public void deplacer(Position pos, PacMan pacman,List <CompFant> listCompFant) {
+    public void deplacer(Position pos, PacMan pacman, List<CompFant> listCompFant) {
 
         if (pos.equals(pacman.getPosition())) {
-            deplacerVersPacman(pos, pacman);
-        } else if(fantomeExist(pos, listCompFant)!=null) {
+            deplacerVersPacman(pos, pacman,listCompFant);
+        } else if (fantomeExist(pos, listCompFant) != null) {
             deplacerVersFant(pos, listCompFant);
-        }else{
+        } else {
             posFant = pos;
         }
         prec = direction;
 
     }
-     protected CompFant fantomeExist(Position pos, List<CompFant> listFant) {
+
+    protected CompFant fantomeExist(Position pos, List<CompFant> listFant) {
         for (int i = 0; i < listFant.size(); ++i) {
             if (listFant.get(i).getPosFant().equals(pos)) {
                 return listFant.get(i);
@@ -58,10 +73,10 @@ public abstract class CompFant {
         }
         return null;
     }
+     
 
-    public Direction changeDirection(Case[][] board) {
-        this.direction = Direction.randomDirection();
-        Position p = posDeDirection(direction);
+    public Direction changeDirection(Position p, Case[][] board) {
+
         while (direction == Direction.directionOposee(prec) || !board[p.getX()][p.getY()].estAccessible()) {
             this.direction = Direction.randomDirection();
             p = posDeDirection(direction);
