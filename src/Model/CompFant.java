@@ -8,7 +8,7 @@ public abstract class CompFant {
     protected static final List<Position> POS_COIN = new LinkedList<>();
     protected Direction direction, prec;
     protected static boolean desso = false;
-    protected int cptFantFusion=0;
+   
 
     public CompFant(Position pos) {
         posFant = pos;
@@ -27,17 +27,18 @@ public abstract class CompFant {
 
     public void choixDeplacement(Case[][] board, PacMan pacman, List<CompFant> listCompFant) {
         Position pos = posDeDirection(direction);
-        while(direction==Direction.directionOposee(prec) || !board[pos.getX()][pos.getY()].estAccessible()) {
+        while( !board[pos.getX()][pos.getY()].estAccessible()) {
             this.direction = Direction.randomDirection();
             pos = posDeDirection(direction);
+            
         }
         deplacer(pos, pacman, listCompFant);
     }
-     public int getNbrFantList(){
-         return cptFantFusion;
-     }
+     public abstract int getNbrFantList();
+        
+     
     public abstract void decomposer(List<CompFant> listCompFant, Case[][] board);
-    public abstract int nbrViesReset(List<CompFant> listCompFant);
+    public abstract int nbrViesReset();
 
     public abstract void addCompFant(CompFant compFant);
 
@@ -49,7 +50,7 @@ public abstract class CompFant {
         listCompFant.remove(f);
         listCompFant.remove(this);
         listCompFant.add(sf);
-        ++cptFantFusion;
+        
     }
 
     public void deplacer(Position pos, PacMan pacman, List<CompFant> listCompFant) {
@@ -75,17 +76,7 @@ public abstract class CompFant {
     }
      
 
-    public Direction changeDirection(Position p, Case[][] board) {
 
-        while (direction == Direction.directionOposee(prec) || !board[p.getX()][p.getY()].estAccessible()) {
-            this.direction = Direction.randomDirection();
-            p = posDeDirection(direction);
-            if (POS_COIN.contains(posFant)) {
-                return direction = Direction.directionOposee(prec);
-            }
-        }
-        return direction;
-    }
 
     public Position posDeDirection(Direction d) {
         if (d == Direction.NORD) {
@@ -106,6 +97,15 @@ public abstract class CompFant {
         }
         return null;
 
+    }
+    public Direction autreDirection(Case[][] board, Direction d){
+        Direction di= Direction.randomDirection();
+        Position p=posDeDirection(di);
+        while(di==d || !board[p.getX()][p.getY()].estAccessible()){
+            di=Direction.randomDirection();
+            p=posDeDirection(di);
+        }
+        return di;
     }
 
     public void setPosition(Position pos) {

@@ -19,7 +19,7 @@ public class Fantome extends CompFant {
         } else {
             posFant = pos;
             pacman.setPosition(pacman.getPosInit());
-            pacman.setNbrVies(nbrViesReset(listCompFant));
+            pacman.setNbrVies(nbrViesReset());
         }
     }
 
@@ -40,8 +40,13 @@ public class Fantome extends CompFant {
     }
 
     @Override
-    public int nbrViesReset(List<CompFant> listCompFant) {
+    public int nbrViesReset() {
         return 1;
+    }
+
+    @Override
+    public int getNbrFantList() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     

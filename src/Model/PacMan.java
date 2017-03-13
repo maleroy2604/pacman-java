@@ -77,7 +77,7 @@ public class PacMan {
             posPacman = pos;
         } else {
             initCase();
-            nbrVies -=f.nbrViesReset(listFant);
+            nbrVies -=f.nbrViesReset();
         }
     }
 

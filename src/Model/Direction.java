@@ -20,13 +20,7 @@ public enum Direction {
     public String toString() {
         return msg;
     }
-    public static Direction autreDirection(Direction d){
-        Direction di=randomDirection();
-        while(d==di){
-            di=randomDirection();
-        }
-        return di;
-    }
+   
 
     public static Direction directionOposee(Direction d) {
         if (d == NORD) {

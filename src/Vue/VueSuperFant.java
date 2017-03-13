@@ -18,19 +18,7 @@ public class VueSuperFant {
      private static int nbrSuperFant;
       
       public static void superFantNbr(Game game,CompFant f){
-        if (game.getFantomes().size() == 2) {
-            if (f.getNbrFantList() == 1) {
-                nbrSuperFant=2;
-            } else {
-                nbrSuperFant= 3;
-            }
-        } else if (game.getFantomes().size() == 1) {
-            nbrSuperFant= 4;
-        }
-
-        else if (game.getFantomes().size() == 3) {
-            nbrSuperFant= 2;   
-        }
+        nbrSuperFant = f.nbrViesReset();
         
       }
      
