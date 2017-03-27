@@ -89,8 +89,8 @@ public class VueFx implements Observer {
                     if(game.getFantome(new Position(i,j))instanceof Fantome){
                         VueFant.paintOn(gc, i, j, game);
                     }else{
-                        VueSuperFant.superFantNbr(game,game.getFantome(new Position(i,j)));
-                        VueSuperFant.paintOn(gc, i, j, game);
+                        
+                        VueSuperFant.paintOn(gc, i, j, game,game.getFantome(new Position(i,j)));
                         
                     }
                 } else if (game.getPacmanPosition().equals(new Position(i,j))) {

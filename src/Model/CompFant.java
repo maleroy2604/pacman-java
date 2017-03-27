@@ -1,14 +1,11 @@
 package Model;
-import java.util.LinkedList;
+
 import java.util.List;
 
 public abstract class CompFant {
 
     protected Position posFant, posInit;
-    protected static final List<Position> POS_COIN = new LinkedList<>();
-    protected Direction direction, prec;
-    protected static boolean desso = false;
-   
+    protected Direction direction;
 
     public CompFant(Position pos) {
         posFant = pos;
@@ -21,49 +18,77 @@ public abstract class CompFant {
     }
 
     public Direction getDirection() {
-
         return direction;
     }
 
-    public void choixDeplacement(Case[][] board, PacMan pacman, List<CompFant> listCompFant) {
+    public void setPosition(Position pos) {
+        this.posFant = pos;
+    }
+
+    public Position getPosFant() {
+        return posFant;
+    }
+
+    public Position getPosInit() {
+        return this.posInit;
+    }
+
+    public void initialise() {
+        posFant = posInit;
+    }
+
+    public abstract CompFant copy();
+
+    public void choixDeplacement(Game g) {
         Position pos = posDeDirection(direction);
-        while( !board[pos.getX()][pos.getY()].estAccessible()) {
+        while (!g.getBoard()[pos.getX()][pos.getY()].estAccessible()) {
             this.direction = Direction.randomDirection();
             pos = posDeDirection(direction);
+        }
+        deplacer(pos, g);
+    }
+
+    public void deplacerVersPacman(Position pos, Game g) {
+        if (g.getPacman().estSuperPacman()) {
+            initialise();
+        } else {
+            posFant = pos;
+            retourArriereAvecNbrViesReset(g);
             
         }
-        deplacer(pos, pacman, listCompFant);
     }
-     public abstract int getNbrFantList();
-        
      
-    public abstract void decomposer(List<CompFant> listCompFant, Case[][] board);
-    public abstract int nbrViesReset();
-
-    public abstract void addCompFant(CompFant compFant);
-
-    public abstract void deplacerVersPacman(Position pos, PacMan pacman,List<CompFant> listCompFant);
-
-    public void deplacerVersFant(Position pos, List<CompFant> listCompFant) {
-        CompFant f = fantomeExist(pos, listCompFant);
-        SuperFant sf = new SuperFant(pos, f, this);
-        listCompFant.remove(f);
-        listCompFant.remove(this);
-        listCompFant.add(sf);
-        
+    
+    public void retourArriereAvecNbrViesReset(Game g){
+     
+     if(g.getPacman().nbrViesRestante()<this.nbrViesReset()){
+         g.setFinDePartie(true);
+     }else{
+         for (int i = 0; i < nbrViesReset(); ++i) {
+                g.setMemento(g.getGardien().retournEnArriere());
+            }
+           g.getPacman().setNbrVies(nbrViesReset());
+     }
     }
 
-    public void deplacer(Position pos, PacMan pacman, List<CompFant> listCompFant) {
+    public void deplacerVersFant(Position pos, Game g) {
+        CompFant f = fantomeExist(pos, g.getFantomes());
+        SuperFant sf = new SuperFant(f, this);
+        g.getFantomes().remove(f);
+        g.getFantomes().remove(this);
+        g.getFantomes().add(sf);
 
-        if (pos.equals(pacman.getPosition())) {
-            deplacerVersPacman(pos, pacman,listCompFant);
-        } else if (fantomeExist(pos, listCompFant) != null) {
-            deplacerVersFant(pos, listCompFant);
+    }
+
+    public void deplacer(Position pos, Game g) {
+
+        if (pos.equals(g.getPacman().getPosition())) {
+            deplacerVersPacman(pos, g);
+        } else if (fantomeExist(pos, g.getFantomes()) != null) {
+            deplacerVersFant(pos, g);
         } else {
             posFant = pos;
         }
-        prec = direction;
-
     }
 
     protected CompFant fantomeExist(Position pos, List<CompFant> listFant) {
@@ -74,9 +99,6 @@ public abstract class CompFant {
         }
         return null;
     }
-     
-
-
 
     public Position posDeDirection(Direction d) {
         if (d == Direction.NORD) {
@@ -98,29 +120,19 @@ public abstract class CompFant {
         return null;
 
     }
-    public Direction autreDirection(Case[][] board, Direction d){
-        Direction di= Direction.randomDirection();
-        Position p=posDeDirection(di);
-        while(di==d || !board[p.getX()][p.getY()].estAccessible()){
-            di=Direction.randomDirection();
-            p=posDeDirection(di);
+
+    public Direction autreDirection(Case[][] board, Direction d) {
+        Direction di = Direction.randomDirection();
+        Position p = posDeDirection(di);
+        while (di == d || !board[p.getX()][p.getY()].estAccessible()) {
+            di = Direction.randomDirection();
+            p = posDeDirection(di);
         }
         return di;
     }
 
-    public void setPosition(Position pos) {
-        this.posFant = pos;
-    }
+    public abstract void decomposer(List<CompFant> listCompFant, Case[][] board);
 
-    public Position getPosFant() {
-        return posFant;
-    }
+    public abstract int nbrViesReset();
 
-    public Position getPosInit() {
-        return this.posInit;
-    }
-
-    public void initialise() {
-        posFant = posInit;
-    }
 }

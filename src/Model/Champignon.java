@@ -9,8 +9,14 @@ public class Champignon extends Aliment {
 
     @Override
     public void estMangerPar(PacMan p) {
-        p.manger(0);
+        p.setNbrVies(-1);
+        p.setMangeChampi(true);
         
+    }
+
+    @Override
+    public Case copy() {
+        return new Champignon();
     }
 
     

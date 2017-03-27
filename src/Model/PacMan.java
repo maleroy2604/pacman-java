@@ -2,24 +2,40 @@ package Model;
 
 import java.util.List;
 import Controller.Direction;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 public class PacMan {
-
+    
     private Position posPacman, posInit;
     private Direction direction;
     private boolean superPacMan = false;
-    private int nbrFant = 4, bonus = 0, nbrVies = 15, nbrGomme = 0;
-    private static final int NBR_GOM_TOT = 226;
+    private  int nbrFant = 4, bonus = 0, nbrGomme = 0 ; 
+    private Timeline timeLine;
+    private static int nbrVies = 5;
     private static final Case CASE_VIDE = new CaseVide();
+    private static boolean mangeChampi = false;
 
     @Override
     public String toString() {
         return " P ";
     }
 
-    public PacMan(Position pos) {
+    public PacMan(Position pos,int nbrGomme,int bonus,boolean superPac) {
+        this(pos);
+        this.nbrGomme=nbrGomme;
+        this.bonus=bonus;
+        this.superPacMan=superPac;
+
+    }
+    public PacMan(Position pos){
         this.posPacman = pos;
         this.posInit = pos;
+    }
+
+    public PacMan(PacMan pac) {
+        this(pac.posPacman,pac.bonus,pac.nbrGomme,pac.superPacMan);
     }
 
     public Position getPosition() {
@@ -38,23 +54,23 @@ public class PacMan {
         superPacMan = val;
     }
 
-    public void choixDeplacement(Case[][] board, List<CompFant> listFant) {
+    public void choixDeplacement(Game g) {
         switch (direction) {
             case NORD:
                 Position posN = new Position(posPacman.getX() - 1, posPacman.getY());
-                deplacer(posN, listFant, board);
+                deplacer(posN, g);
                 break;
             case SUD:
                 Position posS = new Position(posPacman.getX() + 1, posPacman.getY());
-                deplacer(posS, listFant, board);
+                deplacer(posS, g);
                 break;
             case OUEST:
                 Position posO = new Position(posPacman.getX(), posPacman.getY() - 1);
-                deplacer(posO, listFant, board);
+                deplacer(posO, g);
                 break;
             case EST:
                 Position posE = new Position(posPacman.getX(), posPacman.getY() + 1);
-                deplacer(posE, listFant, board);
+                deplacer(posE, g);
                 break;
         }
 
@@ -69,31 +85,50 @@ public class PacMan {
         return null;
     }
 
-    private void deplacerVersFant(Position pos, List<CompFant> listFant) {
-        CompFant f = (fantomeExist(pos, listFant));
+    private void deplacerVersFant(Position pos, Game g) {
+        CompFant f = (fantomeExist(pos, g.getFantomes()));
         if (superPacMan) {
             mangerFant();
             f.setPosition(f.getPosInit());
             posPacman = pos;
         } else {
-            initCase();
-            nbrVies -=f.nbrViesReset();
+            retourArriereAvcNbrViesReset(f, g);
         }
     }
 
-    private void deplacer(Position pos, List<CompFant> listFant, Case[][] board) {
+    private void deplacer(Position pos, Game g) {
 
-        if (board[pos.getX()][pos.getY()].estAccessible()) {
-            if (fantomeExist(pos, listFant)!= null) {
-                board[pos.getX()][pos.getY()].estMangerPar(this);
-                board[posPacman.getX()][posPacman.getY()] = CASE_VIDE;
-                deplacerVersFant(pos, listFant);
+        if (g.getBoard()[pos.getX()][pos.getY()].estAccessible()) {
+            if (fantomeExist(pos, g.getFantomes()) != null) {
+                g.getBoard()[pos.getX()][pos.getY()].estMangerPar(this);
+                g.getBoard()[posPacman.getX()][posPacman.getY()] = CASE_VIDE;
+                deplacerVersFant(pos, g);
             } else {
-                board[pos.getX()][pos.getY()].estMangerPar(this);
-                board[posPacman.getX()][posPacman.getY()] = CASE_VIDE;
+                g.getBoard()[pos.getX()][pos.getY()].estMangerPar(this);
+                g.getBoard()[posPacman.getX()][posPacman.getY()] = CASE_VIDE;
                 posPacman = pos;
             }
+            createMem(g);
 
+        }
+    }
+    public void retourArriereAvcNbrViesReset(CompFant f, Game g){
+         
+         if(nbrVies<f.nbrViesReset()){
+             g.setFinDePartie(true);
+         }else{
+             for (int i = 0; i < f.nbrViesReset(); ++i) {
+                g.getGardien().retournEnArriere();
+            }
+            nbrVies -= f.nbrViesReset();
+         }
+    }
+
+    public void createMem(Game g) {
+        if (mangeChampi) {
+            mangeChampi=false;
+            g.getGardien().ajouteMemento(g.createMemento());
+           
         }
     }
 
@@ -103,13 +138,9 @@ public class PacMan {
 
     private void mangerFant() {
         bonus += 20;
-//        --nbrFant;
-
     }
 
-    private void initCase() {
-        posPacman = posInit;
-    }
+
 
     public void setDirectionPacman(Direction d) {
         direction = d;
@@ -128,7 +159,7 @@ public class PacMan {
     }
 
     public int nbrGommeRestant() {
-        return NBR_GOM_TOT- nbrGomme;
+        return  nbrGomme;
     }
 
     public void manger(int a) {
@@ -141,5 +172,32 @@ public class PacMan {
 
     public int score() {
         return this.bonus;
+    }
+
+    public boolean getMangeChampi() {
+        return mangeChampi;
+    }
+
+    public void setMangeChampi(boolean bol) {
+        mangeChampi = bol;
+    }
+    public int  tempRestant(){
+        int time=0;
+        if(mangeChampi){
+            if(superPacMan){
+                time =(int)(5-timeLine.getCurrentTime().toSeconds());
+            }
+            
+        }
+        return time;
+    }
+    public  void superPacTime(int time){
+        
+         timeLine =new Timeline(new KeyFrame( 
+               Duration.seconds(time),               
+               ae->setSuperPacman(false)
+       ));
+      
+       timeLine.play();
     }
 }

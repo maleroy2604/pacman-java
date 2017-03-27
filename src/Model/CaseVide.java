@@ -17,4 +17,9 @@ public class CaseVide extends Case{
     public void estMangerPar(PacMan p) {
        
     }
+
+    @Override
+    public Case copy() {
+       return new CaseVide();
+    }
 }

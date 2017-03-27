@@ -15,6 +15,11 @@ public class Pacgomme extends Aliment {
 
     }
 
+    @Override
+    public Case copy() {
+        return new Pacgomme();
+    }
+
 
     
 

@@ -15,14 +15,8 @@ public class VueSuperFant {
      private static final Image vide = new Image("file:images/vide.png");
      private static final Image fantZomb = new Image("file:images/enemy_zombie.png");
      private static final int TAILLE = 20;
-     private static int nbrSuperFant;
-      
-      public static void superFantNbr(Game game,CompFant f){
-        nbrSuperFant = f.nbrViesReset();
-        
-      }
      
-     public static void paintOn(GraphicsContext gc,int i,int j,Game game ){
+     public static void paintOn(GraphicsContext gc,int i,int j,Game game, CompFant f ){
          if(game.getPacman().estSuperPacman()){
              gc.drawImage(
                        vide,
@@ -39,7 +33,7 @@ public class VueSuperFant {
                         TAILLE
                 );
              
-         }else if(nbrSuperFant==2){
+         }else if(f.nbrViesReset()==2){
              
              gc.drawImage(
                         fantome2,
@@ -48,7 +42,7 @@ public class VueSuperFant {
                         TAILLE,
                         TAILLE
                 );
-         }else if(nbrSuperFant==3){
+         }else if(f.nbrViesReset()==3){
              
              gc.drawImage(
                         fantome3,
@@ -57,7 +51,7 @@ public class VueSuperFant {
                         TAILLE,
                         TAILLE
                 );
-         }else if(nbrSuperFant==4){
+         }else if(f.nbrViesReset()==4){
              
              gc.drawImage(
                         fantome4,

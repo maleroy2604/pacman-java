@@ -7,31 +7,13 @@ public class Fantome extends CompFant {
 
     public Fantome(Position p) {
         super(p);
-        
-        POS_COIN.add(new Position(11, 1));
-        POS_COIN.add(new Position(11, 21));
     }
-
+    public Fantome(Fantome f) {
+        this(f.posFant);
+    }
     @Override
-    public void deplacerVersPacman(Position pos, PacMan pacman,List<CompFant> listCompFant) {
-        if (pacman.estSuperPacman()) {
-            initialise();
-        } else {
-            posFant = pos;
-            pacman.setPosition(pacman.getPosInit());
-            pacman.setNbrVies(nbrViesReset());
-        }
-    }
-
     public String toString() {
         return " F ";
-    }
-
-   
-
-    @Override
-    public void addCompFant(CompFant compFant) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -45,8 +27,8 @@ public class Fantome extends CompFant {
     }
 
     @Override
-    public int getNbrFantList() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public CompFant copy() {
+        return new Fantome(this);
     }
 
     

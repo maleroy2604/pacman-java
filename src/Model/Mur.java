@@ -18,6 +18,11 @@ public class Mur extends Case {
         return "XXX";
     }
 
+    @Override
+    public Case copy() {
+        return new Mur();
+    }
+
     
 
 
