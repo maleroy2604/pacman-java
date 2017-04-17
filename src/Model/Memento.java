@@ -9,10 +9,6 @@ import java.util.List;
 
 
 interface Memento {
-    
-    void setPacman(PacMan p);
-    void setBoard(Case[][] board);
-    void setListFant(List<CompFant> lf);
     PacMan getPacman();
     Case [][] getBoard();
     List<CompFant> getListFant();

@@ -37,8 +37,6 @@ public abstract class CompFant {
         posFant = posInit;
     }
 
-    public abstract CompFant copy();
-
     public void choixDeplacement(Game g) {
         Position pos = posDeDirection(direction);
         while (!g.getBoard()[pos.getX()][pos.getY()].estAccessible()) {
@@ -54,21 +52,20 @@ public abstract class CompFant {
         } else {
             posFant = pos;
             retourArriereAvecNbrViesReset(g);
-            
+
         }
     }
-     
-    
-    public void retourArriereAvecNbrViesReset(Game g){
-     
-     if(g.getPacman().nbrViesRestante()<this.nbrViesReset()){
-         g.setFinDePartie(true);
-     }else{
-         for (int i = 0; i < nbrViesReset(); ++i) {
+
+    public void retourArriereAvecNbrViesReset(Game g) {
+
+        if (g.getPacman().nbrViesRestante() < this.nbrViesReset()) {
+            g.setFinDePartie(true);
+        } else {
+            for (int i = 0; i < nbrViesReset(); ++i) {
                 g.setMemento(g.getGardien().retournEnArriere());
             }
-           g.getPacman().setNbrVies(nbrViesReset());
-     }
+            g.getPacman().deminuerVies(nbrViesReset());
+        }
     }
 
     public void deplacerVersFant(Position pos, Game g) {
@@ -130,6 +127,8 @@ public abstract class CompFant {
         }
         return di;
     }
+
+    public abstract CompFant copy();
 
     public abstract void decomposer(List<CompFant> listCompFant, Case[][] board);
 

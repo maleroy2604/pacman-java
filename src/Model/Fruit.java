@@ -8,7 +8,7 @@ public class Fruit extends Aliment {
     @Override
     public void estMangerPar(PacMan p) {
        p.setSuperPacman(true);
-       p.superPacTime(DURE);
+       p.superPacmanTime(DURE);
        
        
     }

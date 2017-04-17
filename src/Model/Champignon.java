@@ -1,6 +1,7 @@
 package Model;
 
 public class Champignon extends Aliment {
+    
 
     @Override
     public String toString() {
@@ -9,9 +10,9 @@ public class Champignon extends Aliment {
 
     @Override
     public void estMangerPar(PacMan p) {
-        p.setNbrVies(-1);
+        p.augmenterVies(1);
         p.setMangeChampi(true);
-        
+        p.tempRestantSuperPacman();
     }
 
     @Override

@@ -9,13 +9,13 @@ import Controller.Direction;
 public class Game extends Observable {
 
     private PacMan pacman;
-    private final int NBR_FANTOME = 4;
+    private final int NBR_FANTOME = 4, NBR_MEMENTO_DEPART = 5;
     private List<Position> listPosFant = new LinkedList<>();
     private Case[][] board = new Case[TAB.length][TAB[0].length];
     private List<CompFant> listFant = new LinkedList<>();
-    private static Gardien g=new Gardien();
-    private boolean fin=false;
-    private static  int NBR_GOMME;
+    private static Gardien g = new Gardien();
+    private boolean fin = false;
+    private static int NBR_GOMME;
     private static final int[][] TAB = {
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
         {1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1},
@@ -53,12 +53,12 @@ public class Game extends Observable {
     }
 
     void setMemento(Memento m) {
-           
-        this.listFant=m.getListFant();
-        this.board=m.getBoard();
-        this.pacman=m.getPacman();
-        
-        
+
+        this.listFant = m.getListFant();
+        this.board = m.getBoard();
+        this.pacman = m.getPacman();
+        pacman.tempsRestantSuperPacman();
+
     }
 
     class MementoImpl implements Memento {
@@ -68,14 +68,14 @@ public class Game extends Observable {
         private PacMan pacmanM;
         private Case[][] boardM;
 
-        @Override
+        
         public void setPacman(PacMan p) {
             this.pacmanM = new PacMan(p);
         }
 
-        @Override
+        
         public void setBoard(Case[][] board) {
-            boardM=new Case[board.length][board[0].length];
+            boardM = new Case[board.length][board[0].length];
             for (int i = 0; i < board.length; ++i) {
                 for (int j = 0; j < board[i].length; ++j) {
                     this.boardM[i][j] = board[i][j].copy();
@@ -83,32 +83,31 @@ public class Game extends Observable {
             }
         }
 
-        @Override
+       
         public void setListFant(List<CompFant> lf) {
             for (CompFant f : lf) {
                 this.listFantM.add(f.copy());
             }
         }
-    
 
-    @Override
-    public PacMan getPacman() {
-        return pacmanM;
+        @Override
+        public PacMan getPacman() {
+            return pacmanM;
+        }
+
+        @Override
+        public Case[][] getBoard() {
+            return this.boardM;
+        }
+
+        @Override
+        public List<CompFant> getListFant() {
+            return this.listFantM;
+        }
+
     }
 
-    @Override
-    public Case[][] getBoard() {
-        return this.boardM;
-    }
-
-    @Override
-    public List<CompFant> getListFant() {
-       return this.listFantM;
-    }
-
-}
-
-public Game() {
+    public Game() {
 
         for (int i = 0; i < TAB.length; ++i) {
             for (int j = 0; j < TAB[i].length; ++j) {
@@ -119,7 +118,7 @@ public Game() {
         for (int k = 0; k < NBR_FANTOME; ++k) {
             randomFantome();
         }
-        for(int i=0 ; i<5; ++i){
+        for (int i = 0; i < NBR_MEMENTO_DEPART; ++i) {
             g.ajouteMemento(this.createMemento());
         }
     }
@@ -168,14 +167,17 @@ public Game() {
     }
 
     public boolean finDePartie() {
-        return pacman.nbrFantManger() == 0 || pacman.nbrViesRestante() <= 0 || nbrGommeRestant()==0 || fin==true;
+        return pacman.nbrFantManger() == 0 || pacman.nbrViesRestante() <= 0 || nbrGommeRestant() == 0 || fin == true;
     }
-    public void setFinDePartie(boolean b){
-        this.fin=b;
+
+    public void setFinDePartie(boolean b) {
+        this.fin = b;
     }
-    public int nbrGommeRestant(){
-        return NBR_GOMME-pacman.nbrGommeRestant();
+
+    public int nbrGommeRestant() {
+        return NBR_GOMME - pacman.nbrGommeManger();
     }
+
     public void deplacerPacman() {
         pacman.choixDeplacement(this);
         setChangeAndNotify(this);
@@ -224,7 +226,7 @@ public Game() {
 
         return "Vies restante : " + pacman.nbrViesRestante()
                 + " Score : " + pacman.score() + " " + " nombre Gommes Restants: "
-                + pacman.nbrGommeRestant()+ " nombre Total : " + 226;
+                +nbrGommeRestant() + " nombre Total : " + NBR_GOMME;
     }
 
     public CompFant getFantome(Position pos) {
@@ -242,8 +244,9 @@ public Game() {
             listFant.get(i).decomposer(listFant, board);
         }
     }
-    public Gardien getGardien(){
+
+    public Gardien getGardien() {
         return g;
     }
-    
+
 }

@@ -14,7 +14,6 @@ public class Gardien {
  
     public void ajouteMemento(Memento m){
         mementos.push(m);
-        System.out.println(m);
     }
     public Memento retournEnArriere(){
         return  mementos.pop();
