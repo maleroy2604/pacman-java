@@ -3,6 +3,13 @@ package Model;
 
 
 public class CaseVide extends Case{
+    private static final Case CASE_VIDE = new CaseVide();
+    
+    private CaseVide() {}
+    
+    public static Case getInstanceCaseVide() {
+        return CASE_VIDE;
+    }
 
     @Override
     public boolean estAccessible() {
@@ -20,6 +27,6 @@ public class CaseVide extends Case{
 
     @Override
     public Case copy() {
-       return new CaseVide();
+       return CASE_VIDE;
     }
 }

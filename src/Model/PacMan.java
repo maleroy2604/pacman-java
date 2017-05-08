@@ -14,7 +14,6 @@ public class PacMan {
     private int nbrFant = 4, bonus = 0, nbrGomme = 0, timeRestant = 0;
     private Timeline timeLine;
     private static int nbrVies = 5;
-    private static final Case CASE_VIDE = new CaseVide();
     private static boolean mangeChampi = false;
 
     @Override
@@ -149,11 +148,11 @@ public class PacMan {
         if (g.getBoard()[pos.getX()][pos.getY()].estAccessible()) {
             if (fantomeExist(pos, g.getFantomes()) != null) {
                 g.getBoard()[pos.getX()][pos.getY()].estMangerPar(this);
-                g.getBoard()[posPacman.getX()][posPacman.getY()] = CASE_VIDE;
+                g.getBoard()[posPacman.getX()][posPacman.getY()] = CaseVide.getInstanceCaseVide();
                 deplacerVersFant(pos, g);
             } else {
                 g.getBoard()[pos.getX()][pos.getY()].estMangerPar(this);
-                g.getBoard()[posPacman.getX()][posPacman.getY()] = CASE_VIDE;
+                g.getBoard()[posPacman.getX()][posPacman.getY()] = CaseVide.getInstanceCaseVide();
                 posPacman = pos;
             }
             createMem(g);

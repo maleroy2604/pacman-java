@@ -139,7 +139,7 @@ public class Game extends Observable {
                 break;
             case (2):
                 pacman = new PacMan(pos);
-                board[pos.getX()][pos.getY()] = new CaseVide();
+                board[pos.getX()][pos.getY()] = CaseVide.getInstanceCaseVide();
                 break;
             case (4):
                 board[pos.getX()][pos.getY()] = new Pacgomme();
@@ -155,7 +155,7 @@ public class Game extends Observable {
                 break;
             default:
                 listPosFant.add(pos);
-                board[pos.getX()][pos.getY()] = new CaseVide();
+                board[pos.getX()][pos.getY()] = CaseVide.getInstanceCaseVide();
                 break;
 
         }
