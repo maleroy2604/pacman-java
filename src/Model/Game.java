@@ -5,15 +5,21 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Random;
 import Controller.Direction;
+import java.util.ArrayList;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 public class Game extends Observable {
-
+     
     private PacMan pacman;
     private final int NBR_FANTOME = 4, NBR_MEMENTO_DEPART = 5;
     private List<Position> listPosFant = new LinkedList<>();
     private Case[][] board = new Case[TAB.length][TAB[0].length];
     private List<CompFant> listFant = new LinkedList<>();
     private static Gardien g = new Gardien();
+    private int tempsRestantForSuperPacman=0;
+    private Timeline timeLine;
     private boolean fin = false;
     private static int NBR_GOMME;
     private static final int[][] TAB = {
@@ -43,6 +49,7 @@ public class Game extends Observable {
         {1, 6, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 6, 1},
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
     };
+    private static final Game GAME = new Game();
 
     Memento createMemento() {
         MementoImpl mem = new MementoImpl();
@@ -57,7 +64,7 @@ public class Game extends Observable {
         this.listFant = m.getListFant();
         this.board = m.getBoard();
         this.pacman = m.getPacman();
-        pacman.tempsRestantSuperPacman();
+        this.tempsRestantSuperPacman();
 
     }
 
@@ -107,7 +114,7 @@ public class Game extends Observable {
 
     }
 
-    public Game() {
+    private Game() {
 
         for (int i = 0; i < TAB.length; ++i) {
             for (int j = 0; j < TAB[i].length; ++j) {
@@ -122,7 +129,10 @@ public class Game extends Observable {
             g.ajouteMemento(this.createMemento());
         }
     }
-
+    
+     public static Game getInstanceGame() {
+        return GAME;
+    }
     private void randomFantome() {
 
         Random g = new Random();
@@ -167,7 +177,7 @@ public class Game extends Observable {
     }
 
     public boolean finDePartie() {
-        return pacman.nbrFantManger() == 0 || pacman.nbrViesRestante() <= 0 || nbrGommeRestant() == 0 || fin == true;
+        return pacman.nbrViesRestante() <= 0 || nbrGommeRestant() == 0 || fin == true;
     }
 
     public void setFinDePartie(boolean b) {
@@ -239,7 +249,8 @@ public class Game extends Observable {
     }
 
     public void decomposer() {
-        for (int i = 0; i < listFant.size(); ++i) {
+        List<CompFant> copie = new ArrayList<>(listFant);
+        for (int i = 0; i < copie.size(); ++i) {
 
             listFant.get(i).decomposer(listFant, board);
         }
@@ -247,6 +258,25 @@ public class Game extends Observable {
 
     public Gardien getGardien() {
         return g;
+    }
+    public void tempRestantSuperPacman() {
+        if (pacman.estSuperPacman()) {
+            tempsRestantForSuperPacman = (int) (5 - timeLine.getCurrentTime().toSeconds());
+        }
+       
+    }
+    public void superPacmanTime(int time) {
+        timeLine = new Timeline(new KeyFrame(
+                Duration.seconds(time),
+                ae -> pacman.setSuperPacman(false)
+        ));
+
+        timeLine.play();
+    }
+    void tempsRestantSuperPacman() {
+        if ( tempsRestantForSuperPacman!= 0) {
+            superPacmanTime(tempsRestantForSuperPacman);
+        }
     }
 
 }

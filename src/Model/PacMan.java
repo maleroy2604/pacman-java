@@ -11,15 +11,12 @@ public class PacMan {
     private Position posPacman, posInit;
     private Direction direction;
     private boolean superPacMan = false;
-    private int nbrFant = 4, bonus = 0, nbrGomme = 0, timeRestant = 0;
+    private int bonus = 0, nbrGomme = 0, timeRestant = 0;
     private Timeline timeLine;
     private static int nbrVies = 5;
-    private static boolean mangeChampi = false;
+   
 
-    @Override
-    public String toString() {
-        return " P ";
-    }
+    
 
     public PacMan(Position pos, int nbrGomme, int bonus, boolean superPac, int timeRestant) {
         this(pos);
@@ -61,10 +58,7 @@ public class PacMan {
     public void setDirectionPacman(Direction d) {
         direction = d;
     }
-    //-- version console ;
-    public int nbrFantManger() {
-        return nbrFant;
-    }
+    
     public void augmenterVies(int i){
         this.nbrVies += i;
     }
@@ -92,9 +86,7 @@ public class PacMan {
         return this.bonus;
     }
 
-    public void setMangeChampi(boolean bol) {
-        mangeChampi = bol;
-    }
+   
 
     public void setSuperPacman(boolean val) {
         superPacMan = val;
@@ -150,12 +142,12 @@ public class PacMan {
                 g.getBoard()[pos.getX()][pos.getY()].estMangerPar(this);
                 g.getBoard()[posPacman.getX()][posPacman.getY()] = CaseVide.getInstanceCaseVide();
                 deplacerVersFant(pos, g);
-            } else {
+           } else {
                 g.getBoard()[pos.getX()][pos.getY()].estMangerPar(this);
                 g.getBoard()[posPacman.getX()][posPacman.getY()] = CaseVide.getInstanceCaseVide();
                 posPacman = pos;
             }
-            createMem(g);
+          
 
         }
     }
@@ -173,30 +165,12 @@ public class PacMan {
     }
 
     public void createMem(Game g) {
-        if (mangeChampi) {
-            mangeChampi = false;
-            g.getGardien().ajouteMemento(g.createMemento());
-        }
+        g.getGardien().ajouteMemento(g.createMemento());
     }
 
-    public void tempRestantSuperPacman() {
-        if (superPacMan) {
-            timeRestant = (int) (5 - timeLine.getCurrentTime().toSeconds());
-        }
-    }
-
-    public void superPacmanTime(int time) {
-        timeLine = new Timeline(new KeyFrame(
-                Duration.seconds(time),
-                ae -> setSuperPacman(false)
-        ));
-
-        timeLine.play();
-    }
-
-    void tempsRestantSuperPacman() {
-        if (timeRestant != 0) {
-            superPacmanTime(timeRestant);
-        }
+   
+    @Override
+    public String toString() {
+        return " P ";
     }
 }

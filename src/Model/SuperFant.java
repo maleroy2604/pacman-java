@@ -34,6 +34,7 @@ public class SuperFant extends CompFant {
         listCompFant.add(f1);
         listCompFant.add(f2);
         listCompFant.remove(this);
+        System.out.println(listCompFant);
 
     }
 

@@ -11,8 +11,8 @@ public class Champignon extends Aliment {
     @Override
     public void estMangerPar(PacMan p) {
         p.augmenterVies(1);
-        p.setMangeChampi(true);
-        p.tempRestantSuperPacman();
+        Game.getInstanceGame().tempRestantSuperPacman();
+        p.createMem(Game.getInstanceGame());
     }
 
     @Override

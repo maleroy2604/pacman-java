@@ -15,7 +15,7 @@ public class Controller {
 
     public Controller() {
 
-        game = new Game();
+        game =  Game.getInstanceGame();
         game.addObserver(Vue.getInstance());
 
     }

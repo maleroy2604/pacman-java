@@ -19,17 +19,13 @@ import javafx.util.Duration;
 
 public class ControllerFx extends Application {
 
-    private static final Game game = new Game();
+    private static final Game game =  Game.getInstanceGame();
     private final Canvas root = VueFx.getCanvas();
      
     @Override
     public void start(Stage stage) throws Exception {
         VueFx vue = new VueFx(stage, game);
-       
-       
-      
         joueFantome();
-      
         deplacement();
         game.addObserver(vue);
 
